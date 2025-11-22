@@ -41,8 +41,8 @@ export async function GET() {
             const html = generateInactiveProjectsAlertEmail(inactiveProjects.length);
 
             await transporter.sendMail({
-                from: '"Stratital" <admin@stratital.com>',
-                to: ['admin@stratital.com', 'portal@stratital.com'],
+                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+                to: 'portalnovaprotocols@gmail.com',
                 subject: "Inactive Projects Alert",
                 html,
             })

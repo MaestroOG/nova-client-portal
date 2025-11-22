@@ -61,13 +61,13 @@ export async function createTask(selectedUsers, prevState, formData) {
 
         const transporter = createTransporter();
 
-        const html = generateTaskNotification(title, "", dueDate, `https://www.portal.stratital.com/tasks/${task?._id}`);
+        const html = generateTaskNotification(title, "", dueDate, `https://www.portal.nova.com/tasks/${task?._id}`);
 
         for (const selectedUser of selectedUsers) {
             const assigneeUser = await User.findById(selectedUser);
             await transporter.sendMail({
-                from: '"Stratital" <admin@stratital.com>',
-                to: ['portal@stratital.com', assigneeUser?.email],
+                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+                to: ['portalnovaprotocols@gmail.com', assigneeUser?.email],
                 subject: "New Task Assigned",
                 html,
             })
@@ -264,10 +264,10 @@ export async function createTaskComment(prevState, formData) {
 
         for (const assignedUsers of taskExists?.assignees) {
             const assigneetoSendEmail = await User.findById(assignedUsers);
-            const html = generateTaskCommentNotification(assigneetoSendEmail?.name, taskExists?.title, `https://www.portal.stratital.com/${taskExists?._id}`, taskComment?.createdAt)
+            const html = generateTaskCommentNotification(assigneetoSendEmail?.name, taskExists?.title, `https://www.portal.nova.com/${taskExists?._id}`, taskComment?.createdAt)
             await transporter.sendMail({
-                from: '"Stratital" <admin@stratital.com>',
-                to: ['portal@stratital.com', assigneetoSendEmail?.email],
+                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+                to: ['portalnovaprotocols@gmail.com', assigneetoSendEmail?.email],
                 subject: "New Comment On Task",
                 html,
             })

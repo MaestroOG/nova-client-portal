@@ -96,9 +96,9 @@ export default async function createAudit(prevState, formData) {
             });
 
             await transporter.sendMail({
-                from: '"Stratital" <admin@stratital.com>',
-                to: [auditForUser?.email, 'portal@stratital.com'],
-                subject: "Audit Request - Stratital",
+                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+                to: [auditForUser?.email, 'portalnovaprotocols@gmail.com'],
+                subject: "Audit Request - Nova Protocols",
                 html,
             });
         }

@@ -19,12 +19,12 @@ export async function getRecoveryEmail(prevState, formData) {
     }
 
     const transporter = createTransporter();
-    const html = generateRecoveryEmailTemplate(`https://portal.stratital.com/reset-password?email=${user?.email}`);
+    const html = generateRecoveryEmailTemplate(`https://portal.nova.com/reset-password?email=${user?.email}`);
 
     await transporter.sendMail({
-        from: '"Stratital" <admin@stratital.com>',
-        to: [user?.email, 'portal@stratital.com'],
-        subject: "Password Reset - Stratital",
+        from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+        to: [user?.email, 'portalnovaprotocols@gmail.com'],
+        subject: "Password Reset - Nova Protocols",
         html,
     })
 

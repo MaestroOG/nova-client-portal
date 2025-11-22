@@ -79,14 +79,14 @@ export async function createProject(prevState, formData) {
                 byAdmin: true
             })
 
-            const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected, `https://portal.stratital.com/projects/${project?._id}`);
+            const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected, `https://portal.nova.com/projects/${project?._id}`);
 
             const transporter = createTransporter();
 
             await transporter.sendMail({
-                from: '"Stratital" <admin@stratital.com>',
-                to: [projectForUser?.email, 'portal@stratital.com'],
-                subject: "Project Created - Stratital",
+                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+                to: [projectForUser?.email, 'portalnovaprotocols@gmail.com'],
+                subject: "Project Created - Nova Protocols",
                 html,
             })
         }
@@ -129,14 +129,14 @@ export async function createProject(prevState, formData) {
             })
 
 
-            const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected, `https://portal.stratital.com/projects/${project?._id}`);
+            const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected, `https://portal.nova.com/projects/${project?._id}`);
 
             const transporter = createTransporter();
 
             await transporter.sendMail({
-                from: '"Stratital" <admin@stratital.com>',
-                to: [user?.email, 'portal@stratital.com'],
-                subject: "Project Created - Stratital",
+                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+                to: [user?.email, 'portalnovaprotocols@gmail.com'],
+                subject: "Project Created - Nova Protocols",
                 html,
             })
         }
@@ -172,24 +172,24 @@ export async function addNote(id, prevState, formData) {
 
         const transporter = createTransporter();
 
-        const html = generateNoteCreatedEmailUserTemplate(`https://portal.stratital.com/projects/${project?._id}`, user?.name, project?.projectTitle);
+        const html = generateNoteCreatedEmailUserTemplate(`https://portal.nova.com/projects/${project?._id}`, user?.name, project?.projectTitle);
 
         if (user?.role === 'user') {
             await transporter.sendMail({
-                from: '"Stratital" <admin@stratital.com>',
-                to: ['admin@stratital.com', 'portal@stratital.com'],
-                subject: "Note Created - Stratital",
+                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+                to: ['portalnovaprotocols@gmail.com', 'portalnovaprotocols@gmail.com'],
+                subject: "Note Created - Nova Protocols",
                 html,
             })
         }
 
         if (user?.role === 'superadmin') {
             const date = formatDateToYMD(project?.createdAt)
-            const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date, 'https://portal.stratital.com');
+            const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date, 'https://portal.nova.com');
             await transporter.sendMail({
-                from: '"Stratital" <admin@stratital.com>',
-                to: [project?.createdBy.email, 'portal@stratital.com'],
-                subject: "Note Created - Stratital",
+                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+                to: [project?.createdBy.email, 'portalnovaprotocols@gmail.com'],
+                subject: "Note Created - Nova Protocols",
                 html: adminToUserHtml,
             })
         }
@@ -221,9 +221,9 @@ export async function ApproveProject(projectId, prevState, formData) {
     const transporter = createTransporter();
 
     await transporter.sendMail({
-        from: '"Stratital" <admin@stratital.com>',
-        to: [project?.createdBy.email, 'portal@stratital.com'],
-        subject: "Project Status Update - Stratital",
+        from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+        to: [project?.createdBy.email, 'portalnovaprotocols@gmail.com'],
+        subject: "Project Status Update - Nova Protocols",
         html,
     })
 
@@ -261,9 +261,9 @@ export async function RejectProject(projectId, prevState, formData) {
         const transporter = createTransporter();
 
         await transporter.sendMail({
-            from: '"Stratital" <admin@stratital.com>',
-            to: [user?.email, 'portal@stratital.com'],
-            subject: "Project Status Update - Stratital",
+            from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+            to: [user?.email, 'portalnovaprotocols@gmail.com'],
+            subject: "Project Status Update - Nova Protocols",
             html,
         })
 
@@ -295,9 +295,9 @@ export async function changeProjectStatus(projectId, prevState, formData) {
     const transporter = createTransporter();
 
     await transporter.sendMail({
-        from: '"Stratital" <admin@stratital.com>',
-        to: ["portal@stratital.com", user?.email],
-        subject: "Project Status Update - Stratital",
+        from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+        to: ["portalnovaprotocols@gmail.com", user?.email],
+        subject: "Project Status Update - Nova Protocols",
         html,
     })
 

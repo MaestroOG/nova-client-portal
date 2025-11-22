@@ -56,7 +56,7 @@ export const LoginUser = async (prevState, formData) => {
       transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: process.env.SMTP_USER, // e.g. "stratital.portal@gmail.com"
+          user: process.env.SMTP_USER, // e.g. "portalnovaprotocols@gmail.com"
           pass: process.env.SMTP_PASS, // Gmail app password, not your account password
         },
       });
@@ -67,7 +67,7 @@ export const LoginUser = async (prevState, formData) => {
     }
 
     await transporter.sendMail({
-      from: '"Stratital" <admin@stratital.com>',
+      from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
       to: user?.email,
       subject: "Verify your OTP",
       html,
@@ -187,15 +187,15 @@ export const SignUpUser = async (formValues, prevState, formData) => {
     const userHtml = generateApplicationReceivedUserEmail(name, companyName, email);
 
     await transporter.sendMail({
-      from: '"Stratital" <admin@stratital.com>',
-      to: [email, 'portal@stratital.com'],
-      subject: "Thanks for your interest in partnering with Stratital",
+      from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+      to: [email, 'portalnovaprotocols@gmail.com'],
+      subject: "Thanks for your interest in partnering with Nova Protocols",
       html: userHtml,
     })
 
     await transporter.sendMail({
-      from: '"Stratital" <admin@stratital.com>',
-      to: 'portal@stratital.com',
+      from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+      to: 'portalnovaprotocols@gmail.com',
       subject: "New User Application – Review Required",
       html,
     })
