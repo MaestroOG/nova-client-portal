@@ -8,10 +8,7 @@ const PricingPDF = () => {
     if (loading) return <p className="text-center p-4">Loading pricing document...</p>;
     if (error) return <p className="text-center p-4">Unable to load pricing document</p>;
 
-    const pdfUrl =
-        countryCode?.trim() === "ZA"
-            ? "/stratital-pricelist-south-africa.pdf"
-            : "/stratital-pricelist.pdf";
+    const pdfUrl = '/nova-pricelist.pdf';
 
     return (
         <embed
