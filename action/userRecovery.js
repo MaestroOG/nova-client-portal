@@ -19,7 +19,7 @@ export async function getRecoveryEmail(prevState, formData) {
     }
 
     const transporter = createTransporter();
-    const html = generateRecoveryEmailTemplate(`https://portal.nova.com/reset-password?email=${user?.email}`);
+    const html = generateRecoveryEmailTemplate(`https://partner.novaprotocols.com/reset-password?email=${user?.email}`);
 
     await transporter.sendMail({
         from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',

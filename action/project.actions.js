@@ -79,7 +79,7 @@ export async function createProject(prevState, formData) {
                 byAdmin: true
             })
 
-            const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected, `https://portal.nova.com/projects/${project?._id}`);
+            const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected, `https://partner.novaprotocols.com/projects/${project?._id}`);
 
             const transporter = createTransporter();
 
@@ -129,7 +129,7 @@ export async function createProject(prevState, formData) {
             })
 
 
-            const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected, `https://portal.nova.com/projects/${project?._id}`);
+            const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected, `https://partner.novaprotocols.com/projects/${project?._id}`);
 
             const transporter = createTransporter();
 
@@ -172,7 +172,7 @@ export async function addNote(id, prevState, formData) {
 
         const transporter = createTransporter();
 
-        const html = generateNoteCreatedEmailUserTemplate(`https://portal.nova.com/projects/${project?._id}`, user?.name, project?.projectTitle);
+        const html = generateNoteCreatedEmailUserTemplate(`https://partner.novaprotocols.com/projects/${project?._id}`, user?.name, project?.projectTitle);
 
         if (user?.role === 'user') {
             await transporter.sendMail({
@@ -185,7 +185,7 @@ export async function addNote(id, prevState, formData) {
 
         if (user?.role === 'superadmin') {
             const date = formatDateToYMD(project?.createdAt)
-            const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date, 'https://portal.nova.com');
+            const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date, 'https://partner.novaprotocols.com');
             await transporter.sendMail({
                 from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
                 to: [project?.createdBy.email, 'portalnovaprotocols@gmail.com'],

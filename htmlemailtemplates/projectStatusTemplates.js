@@ -121,7 +121,7 @@ export const generateProjectStatusUpdateEmail = (projectTitle, newStatus, name, 
                 Nova · Australia
               </p>
               <p class="fallback-font muted" style="margin:6px 0 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6b7280;">
-                Need help? <a href="mailto:support@Nova.com" style="color:#2563eb;text-decoration:none;">support@Nova.com</a>
+                Need help? <a href="mailto:team@novaprotocols.com" style="color:#2563eb;text-decoration:none;">team@novaprotocols.com</a>
               </p>
             </td>
           </tr>
@@ -226,7 +226,7 @@ export const generateInactiveProjectsAlertEmail = (projectCount) => {
                 <table role="presentation" width="100%">
                   <tr>
                     <td style="font-size:13px;color:#94a3b8;">Sent by <strong>Admin Team at Nova</strong></td>
-                    <td style="text-align:right;font-size:13px;color:#94a3b8;">Need help? <a href="mailto:support@Nova.com" style="color:#2563eb;text-decoration:none;">support@Nova.com</a></td>
+                    <td style="text-align:right;font-size:13px;color:#94a3b8;">Need help? <a href="mailto:team@novaprotocols.com" style="color:#2563eb;text-decoration:none;">team@novaprotocols.com</a></td>
                   </tr>
                 </table>
               </td>

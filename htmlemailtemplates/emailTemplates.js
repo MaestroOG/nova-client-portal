@@ -159,7 +159,7 @@ export const generatePartnershipEmailTemplate = (email, monthlyProjectVolume, na
                 </table>
 
                       <p style="margin:14px 0 0; font-size:12px; color:#6b7280;">
-                        Manage this request in the <a href="https://portal.nova.com" style="color:#2563eb;">Portal</a>.
+                        Manage this request in the <a href="https://partner.novaprotocols.com" style="color:#2563eb;">Portal</a>.
                       </p>
                     </td>
                   </tr>
@@ -219,12 +219,12 @@ export const generateAcceptEmailTemplate = () => {
 
         <!-- New sentence -->
         <p style="font-size:15px; line-height:1.6; margin-top:20px; text-align:center; color:#444;">
-          Want to learn how to use the portal? <a href="https://portal.nova.com/how-to" target="_blank" style="color:#0d47a1; font-weight:600; text-decoration:none;">Watch this video first</a>.
+          Want to learn how to use the portal? <a href="https://partner.novaprotocols.com/how-to" target="_blank" style="color:#0d47a1; font-weight:600; text-decoration:none;">Watch this video first</a>.
         </p>
 
         <!-- Call to Action -->
         <div style="text-align:center; margin:30px 0;">
-          <a href="https://portal.nova.com/login" target="_blank" 
+          <a href="https://partner.novaprotocols.com/login" target="_blank" 
              style="background-color:#430D4B; color:#ffffff; text-decoration:none; padding:14px 28px; border-radius:8px; font-size:16px; font-weight:600; display:inline-block;">
              Log In to Client Portal
           </a>
@@ -749,7 +749,7 @@ export const generateAdminToUserEmailNoteTemplate = (projectTitle, name, created
                 Nova · Australia
               </p>
               <p class="fallback-font muted" style="margin:6px 0 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6b7280;">
-                Need help? <a href="mailto:support@Nova.com" style="color:#2563eb;text-decoration:none;">support@nova.com</a>
+                Need help? <a href="mailto:team@novaprotocols.com" style="color:#2563eb;text-decoration:none;">team@novaprotocols.com</a>
               </p>
             </td>
           </tr>
