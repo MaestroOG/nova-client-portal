@@ -56,11 +56,15 @@ body {
 
   .sidebar-link::after {
     content: '';
-    @apply absolute left-0 bottom-0 h-[2px] bg-primary dark:bg-white;
+    @apply absolute left-0 bottom-0 h-[2px] bg-primary;
     width: 100%;
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease-in-out;
+  }
+
+  .dark .sidebar-link::after {
+    @apply bg-white;
   }
 
   .sidebar-link:hover::after {
