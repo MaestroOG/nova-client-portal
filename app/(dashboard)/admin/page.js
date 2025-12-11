@@ -37,7 +37,7 @@ const SuperAdminPage = async () => {
                     <Button variant="link">Assign Credit</Button>
                 </Link>
 
-                {user?.name === "Muneeb Ur Rehman" && (
+                {user?.name === "Muneeb Ur Rehman" || user?.name === "Nabeel Ahmad" && (
                     <Link href="/admin/create-superadmin">
                         <Button variant="link">Assign a Superadmin</Button>
                     </Link>
