@@ -44,21 +44,21 @@ const ExpenditurePage = async () => {
                 <Card>
                     <CardContent className="p-4">
                         <p className="text-sm text-muted-foreground">Total {user?.role === 'superadmin' ? 'Revenue' : 'Spent'}</p>
-                        <p className="text-2xl font-semibold">$ {totalSpent.toLocaleString()}.00</p>
+                        <p className="text-2xl font-semibold text-foreground">$ {totalSpent.toLocaleString()}.00</p>
                     </CardContent>
                 </Card>
 
                 <Card>
                     <CardContent className="p-4">
                         <p className="text-sm text-muted-foreground">Total Running Projects</p>
-                        <p className="text-2xl font-semibold">{runningProjectsThisMonth}</p>
+                        <p className="text-2xl font-semibold text-foreground">{runningProjectsThisMonth}</p>
                     </CardContent>
                 </Card>
 
                 <Card>
                     <CardContent className="p-4">
                         <p className="text-sm text-muted-foreground">Month</p>
-                        <p className="text-lg font-medium">
+                        <p className="text-lg font-medium text-foreground">
                             {new Date().toLocaleString('default', { month: 'long' })}
                         </p>
                     </CardContent>
