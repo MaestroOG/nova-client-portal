@@ -21,7 +21,7 @@ const ProjectsPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">
                     {yourProjects.map(project => (
 
-                        <Card className="flex flex-col justify-between max-w-sm bg-white border-gray-200 shadow-sm">
+                        <Card key={project.id} className="flex flex-col justify-between max-w-sm bg-white border-gray-200 shadow-sm">
                             <CardHeader>
                                 <CardTitle className="text-2xl font-bold text-black">
                                     {project?.projectTitle}
