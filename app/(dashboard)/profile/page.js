@@ -28,19 +28,19 @@ const ProfilePage = async () => {
             {/* Contact Info */}
             <section className="space-y-2">
                 <h2 className="text-xl font-semibold border-b pb-1">Contact Information</h2>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <li className="flex items-center gap-2"><Mail size={16} /> {userDetail?.email} <Link href={'/change-email'}><Pencil size={16} /></Link></li>
-                    <li className="flex items-center gap-2"><Phone size={16} /> {userDetail?.phoneNum}</li>
-                    <li className="flex items-center gap-2"><Mail size={16} /> {userDetail?.contactEmail}</li>
-                    <li className="flex items-center gap-2"><Globe size={16} /> <a href={userDetail?.companyWebsite} target="_blank" className="text-blue-600 underline">Website</a></li>
-                    <li className="flex items-center gap-2"><MapPin size={16} /> {userDetail?.businessAddress}</li>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-black">
+                    <li className="flex items-center gap-2 text-black"><Mail size={16} /> {userDetail?.email} <Link href={'/change-email'}><Pencil size={16} /></Link></li>
+                    <li className="flex items-center gap-2 text-black"><Phone size={16} /> {userDetail?.phoneNum}</li>
+                    <li className="flex items-center gap-2 text-black"><Mail size={16} /> {userDetail?.contactEmail}</li>
+                    <li className="flex items-center gap-2 text-black"><Globe size={16} /> <a href={userDetail?.companyWebsite} target="_blank" className="text-blue-600 underline">Website</a></li>
+                    <li className="flex items-center gap-2 text-black"><MapPin size={16} /> {userDetail?.businessAddress}</li>
                 </ul>
             </section>
 
             {/* Company Details */}
             <section>
                 <h2 className="text-xl font-semibold border-b pb-1">Company Details</h2>
-                <dl className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                <dl className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2 text-black">
                     <div><dt className="font-semibold">ABN</dt><dd>{userDetail?.abn}</dd></div>
                     <div><dt className="font-semibold">Years in Business</dt><dd>{userDetail?.yearsInBiz}</dd></div>
                     <div><dt className="font-semibold">Active Clients</dt><dd>{userDetail?.numOfActiveClients}</dd></div>

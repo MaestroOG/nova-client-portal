@@ -18,7 +18,7 @@ const ChangePicturePage = () => {
                     id="image"
                     name="image"
                 />
-                <Button type='submit' className={'mt-2'} disabled={isPending}>Submit</Button>
+                <Button type='submit' className={'mt-2'} disabled={isPending}>Upload Image</Button>
             </form>
 
         </Container>
