@@ -65,7 +65,7 @@ const ProfilePage = async () => {
                 <h2 className="text-xl font-semibold border-b pb-1">Social Media</h2>
                 <div className="flex flex-wrap gap-2 mt-2">
                     {userDetail?.socialMediaLinks?.map((link, i) => (
-                        <a key={i} href={link} target="_blank" className="px-3 py-1 bg-blue-100 rounded-full hover:bg-blue-200 flex items-center gap-1 text-sm">
+                        <a key={i} href={link} target="_blank" className="px-3 py-1 bg-blue-100 rounded-full hover:bg-blue-200 flex items-center gap-1 text-sm text-black">
                             <LinkIcon size={14} /> {link.split("//")[1]}
                         </a>
                     ))}
