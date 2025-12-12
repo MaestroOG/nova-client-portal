@@ -31,6 +31,14 @@ body {
   text-decoration: underline;
 }
 
+/* FIX: Radix UI Drawer not scrollable on mobile */
+[data-radix-drawer-viewport] {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+}
+
+
 @theme {
   --color-background-gray: #E8E8E8;
   --color-dark-blue: #2D2F39;

@@ -213,7 +213,7 @@ const Header = ({ userFromDB, pfpLink }) => {
                 <div className="flex items-center md:hidden">
                     <Drawer direction="left">
                         <DrawerTrigger className='md:hidden'><Menu className='text-foreground' size={23}></Menu></DrawerTrigger>
-                        <DrawerContent className={'bg-background-gray dark:bg-background h-full overflow-y-auto touch-pan-y'}>
+                        <DrawerContent className={'bg-background-gray dark:bg-background h-full'}>
                             <DrawerHeader>
                                 <DrawerClose>
                                     <X className='text-foreground' />
