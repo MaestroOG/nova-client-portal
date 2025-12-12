@@ -27,6 +27,7 @@ import Linkify from 'linkify-react';
 import Loader from '../Loader';
 import { useCountry } from "@/hooks/useCountry";
 import { ModeToggle } from "../mode-toggle";
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 const Header = ({ userFromDB, pfpLink }) => {
     const pathname = usePathname();
@@ -226,28 +227,32 @@ const Header = ({ userFromDB, pfpLink }) => {
                                         </Link>
                                     </DrawerClose>} */}
 
-                                    <div className="sidebar-menu">
-                                        {links.map((link, i) => {
-                                            const isActive =
-                                                pathname === link.href || pathname.startsWith(link.href + "/")
-                                            return (
-                                                <DrawerClose asChild key={i}>
-                                                    <Link
-                                                        href={link.href}
-                                                        className={`${isActive ? "bg-primary text-background dark:text-foreground" : "text-foreground"} sidebar-link`}
-                                                    >
-                                                        <div className="flex items-center gap-2">
-                                                            {link.icon}
-                                                            <span className="text-lg font-bold md:block">
-                                                                {link.title}
-                                                            </span>
-                                                        </div>
-                                                    </Link>
-                                                </DrawerClose>
+                                    <ScrollArea className="flex-1 overflow-auto p-4 pt-0">
 
-                                            )
-                                        })}
-                                    </div>
+                                        <div className="sidebar-menu">
+                                            {links.map((link, i) => {
+                                                const isActive =
+                                                    pathname === link.href || pathname.startsWith(link.href + "/")
+                                                return (
+                                                    <DrawerClose asChild key={i}>
+                                                        <Link
+                                                            href={link.href}
+                                                            className={`${isActive ? "bg-primary text-background dark:text-foreground" : "text-foreground"} sidebar-link`}
+                                                        >
+                                                            <div className="flex items-center gap-2">
+                                                                {link.icon}
+                                                                <span className="text-lg font-bold md:block">
+                                                                    {link.title}
+                                                                </span>
+                                                            </div>
+                                                        </Link>
+                                                    </DrawerClose>
+
+                                                )
+                                            })}
+                                        </div>
+
+                                    </ScrollArea>
                                 </div>
                             </DrawerHeader>
                             <DrawerFooter className={'w-full'}>
