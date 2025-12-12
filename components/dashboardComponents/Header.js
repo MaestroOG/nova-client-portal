@@ -215,10 +215,10 @@ const Header = ({ userFromDB, pfpLink }) => {
                         <DrawerTrigger className='md:hidden'><Menu className='text-foreground' size={23}></Menu></DrawerTrigger>
                         <DrawerContent className={'bg-background-gray dark:bg-background h-full'}>
                             <DrawerHeader>
-                                <DrawerClose>
+                                {/* <DrawerClose>
                                     <X className='text-foreground' />
-                                </DrawerClose>
-                                <div className='mt-8'>
+                                </DrawerClose> */}
+                                <div className='mt-2'>
                                     {/* {userFromDB?.role !== 'manager' && <DrawerClose asChild>
                                         <Link href={'/projects/new-project'} className={`bg-white flex items-center gap-2.5 p-2 rounded-full cursor-pointer`}>
                                             <Image src={'/addIcon.png'} width={34} height={34} alt="Add_Icon" />
