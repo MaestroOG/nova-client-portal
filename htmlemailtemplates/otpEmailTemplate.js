@@ -107,7 +107,7 @@ export const generateOTPEmail = (otp, name) => {
           <tr>
             <td align="center" style="padding:20px;background:#f8fafc;">
               <p class="muted" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6b7280;">
-                Nova · Australia
+                Nova Protocols
               </p>
               <p class="muted" style="margin:6px 0 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6b7280;">
                 Need help? <a href="mailto:team@novaprotocols.com" style="color:#2563eb;text-decoration:none;">team@novaprotocols.com</a>

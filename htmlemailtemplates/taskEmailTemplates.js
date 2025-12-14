@@ -30,7 +30,7 @@ export const generateTaskOverdueEmail = (task) => {
           </tr>
           <tr>
             <td style="background-color:#f1f1f1; text-align:center; padding:16px; font-size:12px; color:#888;">
-              © ${new Date().getFullYear()} Nova. All rights reserved.
+              © ${new Date().getFullYear()} Nova Protocols. All rights reserved.
             </td>
           </tr>
         </table>
@@ -221,7 +221,7 @@ export const generateTaskCommentNotification = (user_name, task_title, task_url,
     </div>
 
     <div class="footer">
-      © 2025 Nova — You’re receiving this because you’re assigned to the task.
+      © 2025 Nova Protocols — You’re receiving this because you’re assigned to the task.
     </div>
   </div>
 </body>

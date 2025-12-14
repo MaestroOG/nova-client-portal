@@ -83,7 +83,7 @@ export const generateRecoveryEmailTemplate = (resetLink) => {
 
       <!-- Footer -->
       <div class="footer">
-        <p>&copy; ${new Date().getFullYear()} Nova. All rights reserved.</p>
+        <p>&copy; ${new Date().getFullYear()} Nova Protocols. All rights reserved.</p>
       </div>
     </div>
   </div>

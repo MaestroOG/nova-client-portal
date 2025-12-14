@@ -502,7 +502,7 @@ export const generateApplicationReceivedUserEmail = (name, companyName, email) =
           <tr>
             <td align="center" style="padding:22px;background:#f8fafc;">
               <p class="muted" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6b7280;">
-                Nova Protocols · Australia
+                Nova Protocols
               </p>
               <p class="muted" style="margin:8px 0 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6b7280;">
                 Need help? <a href="mailto:support@novaprotocols.com" style="color:#2563eb;text-decoration:none;">support@novaprotocols.com</a>
@@ -743,7 +743,7 @@ export const generateAdminToUserEmailNoteTemplate = (projectTitle, name, created
           <tr>
             <td align="center" style="padding:18px;background:#f8fafc;">
               <p class="fallback-font muted" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6b7280;">
-                Nova · Australia
+                Nova Protocols
               </p>
               <p class="fallback-font muted" style="margin:6px 0 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6b7280;">
                 Need help? <a href="mailto:team@novaprotocols.com" style="color:#2563eb;text-decoration:none;">team@novaprotocols.com</a>
