@@ -44,7 +44,7 @@ const DeleteTaskForm = ({ id }) => {
                         </DialogHeader>
                         <DialogFooter className={'mt-4'}>
                             <DialogClose asChild>
-                                <Button variant="outline">Cancel</Button>
+                                <Button variant="outline" className={'text-black'}>Cancel</Button>
                             </DialogClose>
                             <Button disabled={isPending} type="submit">Yes, Delete</Button>
                         </DialogFooter>

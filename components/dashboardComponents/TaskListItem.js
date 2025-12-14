@@ -26,7 +26,7 @@ export default function TaskListItem({ task }) {
         }>
           {status}
         </Badge>
-        <Link href={`/tasks/${_id}`}><Button variant="outline" size="sm">View</Button></Link>
+        <Link href={`/tasks/${_id}`}><Button className={'text-black'} variant="outline" size="sm">View</Button></Link>
         <DeleteTaskForm id={_id} />
       </div>
     </div>

@@ -1,13 +1,13 @@
 import Container from "@/components/dashboardComponents/Container"
 import TaskListItem from "@/components/dashboardComponents/TaskListItem"
 import { Button } from "@/components/ui/button"
-import { getTasks, getUserAssignedTasks } from "@/lib/task"
+import { getTasks, getUserRelatedTasks } from "@/lib/task"
 import { getUser } from "@/lib/user"
 import Link from "next/link"
 
 const TasksPage = async () => {
     const user = await getUser();
-    let tasks = await getUserAssignedTasks(user?._id);
+    let tasks = await getUserRelatedTasks(user?._id);
     // if (user?.role === 'manager') {
     //     tasks = await getTasks();
     // }

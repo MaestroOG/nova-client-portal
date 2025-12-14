@@ -58,7 +58,7 @@ const TaskDetailPage = async ({ params }) => {
                     <div className="sm:col-span-2">
                         <Label>Assignees</Label>
                         {task?.assignees?.length > 0 ? (
-                            <ul className="list-disc pl-5 mt-2">
+                            <ul className="list-disc pl-5 mt-2 text-black">
                                 {task?.assignees.map(user => (
                                     <li key={user._id}>{user.name}</li>
                                 ))}

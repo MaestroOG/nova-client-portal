@@ -69,7 +69,7 @@ export const generateTaskNotification = (task_title, task_description, due_date,
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     .header {
-      background: #F33C38;
+      background: oklch(0.2861 0.1154 322.1426);
       color: #fff;
       text-align: center;
       padding: 20px;
@@ -89,7 +89,7 @@ export const generateTaskNotification = (task_title, task_description, due_date,
     }
     .btn {
       display: inline-block;
-      background: #F33C38;
+      background: oklch(0.2861 0.1154 322.1426);
       color: #fff !important;
       text-decoration: none;
       padding: 12px 20px;
@@ -124,11 +124,11 @@ export const generateTaskNotification = (task_title, task_description, due_date,
       <a href="${cta_url}" class="btn">View Task</a>
 
       <p style="font-size:14px;color:#555;margin-top:20px;">
-        If you have any questions, reach out to support@stratital.com.
+        If you have any questions, reach out to team@novaprotocols.com.
       </p>
     </div>
     <div class="footer">
-      © 2025 Stratital — This is an automated message.
+      © 2025 Nova Protocols — This is an automated message.
     </div>
   </div>
 </body>

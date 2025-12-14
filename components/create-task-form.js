@@ -93,7 +93,7 @@ const CreateTaskForm = ({ users }) => {
                             <Button
                                 variant="outline"
                                 id="dueDate"
-                                className="w-full md:max-w-2xl justify-between font-normal"
+                                className="w-full md:max-w-2xl justify-between font-normal text-black"
                             >
                                 {date ? date.toLocaleDateString() : "Select date"}
                                 <ChevronDownIcon />

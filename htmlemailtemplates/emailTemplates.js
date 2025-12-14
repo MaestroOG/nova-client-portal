@@ -537,7 +537,7 @@ export const generateNoteCreatedEmailUserTemplate = (commentUrl, name, projectTi
       .text { color:#e8e8ea!important; }
       .muted { color:#b8bac1!important; }
       .divider { border-color:#2a2d36!important; }
-      .btn { background:#F33C38!important; color:#ffffff!important; }
+      .btn { background:oklch(0.2861 0.1154 322.1426)!important; color:#ffffff!important; }
       .btn span { color:#ffffff!important; }
     }
   </style>
@@ -597,7 +597,7 @@ export const generateNoteCreatedEmailUserTemplate = (commentUrl, name, projectTi
               <!-- Bulletproof button -->
               <table role="presentation" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td align="center" bgcolor="#F33C38" style="border-radius:8px;">
+                  <td align="center" bgcolor="oklch(0.2861 0.1154 322.1426)" style="border-radius:8px;">
                     <a href="${commentUrl}" target="_blank"
                        class="btn"
                        style="display:inline-block;padding:12px 20px;border-radius:8px;background:#430D4B;text-decoration:none;">
