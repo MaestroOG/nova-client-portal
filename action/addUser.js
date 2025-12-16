@@ -50,7 +50,7 @@ export async function addUser(prevState, formData) {
 
         await transporter.sendMail({
             from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-            to: ["portalnovaprotocols@gmail.com", user?.email],
+            to: ["portalnovaprotocols@gmail.com", user?.email, 'team@novaprotocols.com'],
             subject: "Partnership Application Update – Accepted",
             html,
         });

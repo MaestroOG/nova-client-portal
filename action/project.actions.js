@@ -85,7 +85,7 @@ export async function createProject(prevState, formData) {
 
             await transporter.sendMail({
                 from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-                to: [projectForUser?.email, 'portalnovaprotocols@gmail.com'],
+                to: [projectForUser?.email, 'portalnovaprotocols@gmail.com', 'team@novaprotocols.com'],
                 subject: "Project Created - Nova Protocols",
                 html,
             })
@@ -135,7 +135,7 @@ export async function createProject(prevState, formData) {
 
             await transporter.sendMail({
                 from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-                to: [user?.email, 'portalnovaprotocols@gmail.com'],
+                to: [user?.email, 'portalnovaprotocols@gmail.com', 'team@novaprotocols.com'],
                 subject: "Project Created - Nova Protocols",
                 html,
             })
@@ -177,7 +177,7 @@ export async function addNote(id, prevState, formData) {
         if (user?.role === 'user') {
             await transporter.sendMail({
                 from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-                to: ['portalnovaprotocols@gmail.com', 'portalnovaprotocols@gmail.com'],
+                to: ['portalnovaprotocols@gmail.com', 'team@novaprotocols.com'],
                 subject: "Note Created - Nova Protocols",
                 html,
             })
@@ -188,7 +188,7 @@ export async function addNote(id, prevState, formData) {
             const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date, `https://partner.novaprotocols.com/${project?._id}`);
             await transporter.sendMail({
                 from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-                to: [project?.createdBy.email, 'portalnovaprotocols@gmail.com'],
+                to: [project?.createdBy.email, 'portalnovaprotocols@gmail.com', 'team@novaprotocols.com'],
                 subject: "Note Created - Nova Protocols",
                 html: adminToUserHtml,
             })
@@ -222,7 +222,7 @@ export async function ApproveProject(projectId, prevState, formData) {
 
     await transporter.sendMail({
         from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-        to: [project?.createdBy.email, 'portalnovaprotocols@gmail.com'],
+        to: [project?.createdBy.email, 'portalnovaprotocols@gmail.com', 'team@novaprotocols.com'],
         subject: "Project Status Update - Nova Protocols",
         html,
     })
@@ -262,7 +262,7 @@ export async function RejectProject(projectId, prevState, formData) {
 
         await transporter.sendMail({
             from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-            to: [user?.email, 'portalnovaprotocols@gmail.com'],
+            to: [user?.email, 'portalnovaprotocols@gmail.com', 'team@novaprotocols.com'],
             subject: "Project Status Update - Nova Protocols",
             html,
         })
@@ -296,7 +296,7 @@ export async function changeProjectStatus(projectId, prevState, formData) {
 
     await transporter.sendMail({
         from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-        to: ["portalnovaprotocols@gmail.com", user?.email],
+        to: ["portalnovaprotocols@gmail.com", user?.email, 'team@novaprotocols.com'],
         subject: "Project Status Update - Nova Protocols",
         html,
     })

@@ -16,6 +16,13 @@ const NoteBox = ({ user, id }) => {
     const [value, setValue] = useState("");
     const contentRef = useRef(null);
 
+    const editorConfig = {
+        style: {
+            // This targets the body/content of the editor
+            color: '#000000',
+        }
+    };
+
     useEffect(() => {
         if (state?.success) {
             const newNote = {
@@ -36,9 +43,9 @@ const NoteBox = ({ user, id }) => {
                 <JoditEditor
                     ref={contentRef}
                     value={value}
+                    config={editorConfig}
                     tabIndex={1}
                     onBlur={newContent => setValue(newContent)}
-                    onChange={(newContent) => setValue(newContent)}
                 />
                 <input type="hidden" name="commentText" value={value} />
                 <Button disabled={isPending} type="submit">Send</Button>

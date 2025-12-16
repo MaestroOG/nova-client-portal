@@ -46,7 +46,7 @@ export async function deleteInvoice(prevState, formData) {
         if (!deletedInvoice) {
             return { success: false, message: "Invoice not found" };
         }
-        revalidatePath("/invoices", "page");
+
         revalidatePath("/", "layout");
         redirect("/invoices");
     } catch (err) {

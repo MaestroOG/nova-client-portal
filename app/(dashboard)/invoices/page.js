@@ -36,7 +36,7 @@ const InvoicesPage = async () => {
 
                 {/* --- All Invoices Tab --- */}
                 <TabsContent value="all" className="mt-4">
-                    {initialInvoices.length === 0 && <p className="p-4 text-center">No Invoices.</p>}
+                    {initialInvoices.length === 0 && <p className="p-4 text-center text-foreground">No Invoices.</p>}
                     <div className="grid md:grid-cols-3 gap-4">
                         {initialInvoices.length > 0 && initialInvoices.map((invoice) => (
                             <Card key={invoice?._id} className="rounded-2xl shadow-md">

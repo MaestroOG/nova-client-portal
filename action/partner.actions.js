@@ -29,7 +29,7 @@ export async function deletePartner(prevState, formData) {
         const transporter = createTransporter();
         await transporter.sendMail({
             from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-            to: [user?.email, 'portalnovaprotocols@gmail.com'],
+            to: [user?.email, 'portalnovaprotocols@gmail.com', 'team@novaprotocols.com'],
             subject: "Partnership Update - Ended",
             html,
         })

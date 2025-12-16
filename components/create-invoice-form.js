@@ -85,7 +85,6 @@ const CreateInvoiceForm = ({ partners }) => {
                                     value={value}
                                     tabIndex={1}
                                     onBlur={newContent => setValue(newContent)}
-                                    onChange={newContent => { }}
                                 />
                             </Suspense>
                             <input type="hidden" name="details" value={value} />
@@ -104,7 +103,7 @@ const CreateInvoiceForm = ({ partners }) => {
                             {state.success ? "✅ Success" : "⚠️ Error"}
                         </DialogTitle>
                     </DialogHeader>
-                    <p>{state.message}</p>
+                    <p className="text-detail">{state.message}</p>
                 </DialogContent>
             </Dialog>
         </>

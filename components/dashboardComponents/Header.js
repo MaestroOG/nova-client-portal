@@ -156,7 +156,7 @@ const Header = ({ userFromDB, pfpLink }) => {
                         <CircleDollarSign className="text-foreground" />
                         <p className="text-foreground">AUD {userFromDB?.credit}.00</p>
                     </div>}
-                    <div className="flex items-center">
+                    {/* <div className="flex items-center">
                         {loading && <Loader size="h-4 w-4" />}
                         {!loading && !error && countryCode && <Image
                             src={countryCode.trim() === 'ZA' ? '/south-africa.svg' : "/australia.svg"}
@@ -167,7 +167,7 @@ const Header = ({ userFromDB, pfpLink }) => {
                         />
                         }
 
-                    </div>
+                    </div> */}
                     <Popover onOpenChange={handleOpen}>
                         <PopoverTrigger> <NotificationBtn length={count} /></PopoverTrigger>
                         <PopoverContent className={'w-[400px] h-96 overflow-y-auto'}>

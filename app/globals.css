@@ -16,6 +16,22 @@ body {
   word-break: break-all;
 }
 
+.jodit-container:not(.jodit_theme_dark) .jodit-wysiwyg {
+  /* Set the default text color to black for light mode */
+  color: #000000 !important;
+}
+
+/* Also, target the main body/container where the content is rendered */
+/* This can help ensure the cursor and default typing color are correct */
+.jodit-container:not(.jodit_theme_dark) .jodit-wysiwyg * {
+  color: #000000 !important;
+}
+
+/* You might also need to target the placeholder text if you use one */
+.jodit-placeholder {
+  color: #6c757d !important;
+  /* A darker gray for contrast */
+}
 
 .jodit-wysiwyg a {
   color: #1d4ed8;
@@ -68,7 +84,7 @@ body {
 
   .sidebar-link::after {
     content: '';
-    @apply absolute left-0 bottom-0 h-[2px] bg-primary;
+    @apply absolute left-0 bottom-0 h-0.5 bg-primary;
     width: 100%;
     transform: scaleX(0);
     transform-origin: left;
@@ -93,7 +109,7 @@ body {
   }
 
   p {
-    @apply text-muted;
+    @apply text-black;
   }
 }
 

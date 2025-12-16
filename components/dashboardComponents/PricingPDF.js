@@ -5,8 +5,8 @@ import { useCountry } from "@/hooks/useCountry";
 const PricingPDF = () => {
     const { countryCode, loading, error } = useCountry();
 
-    if (loading) return <p className="text-center p-4">Loading pricing document...</p>;
-    if (error) return <p className="text-center p-4">Unable to load pricing document</p>;
+    if (loading) return <p className="text-center p-4 text-black">Loading pricing document...</p>;
+    if (error) return <p className="text-center p-4 text-black">Unable to load pricing document</p>;
 
     const pdfUrl = '/nova-pricelist.pdf';
 

@@ -81,7 +81,7 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                                 <CardContent>
                                     <p
                                         className={`text-lg font-medium ${displayValue === "Not provided" ? "text-muted-foreground italic" : "text-foreground"
-                                            } break-words`}
+                                            } wrap-break-word`}
                                     >
                                         {displayValue}
                                     </p>
@@ -91,7 +91,7 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                     })}
 
                     {/* Selected Package Card */}
-                    <Card className="rounded-2xl shadow-sm border border-border hover:shadow-md transition-all duration-200 bg-muted/30">
+                    <Card className="rounded-2xl shadow-sm border border-border hover:shadow-md transition-all duration-200">
                         <CardHeader>
                             <CardTitle className="text-sm text-muted-foreground tracking-wide">
                                 Selected Package

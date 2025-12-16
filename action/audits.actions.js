@@ -97,7 +97,7 @@ export default async function createAudit(prevState, formData) {
 
             await transporter.sendMail({
                 from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-                to: [auditForUser?.email, 'portalnovaprotocols@gmail.com'],
+                to: [auditForUser?.email, 'portalnovaprotocols@gmail.com', 'team@novaprotocols.com'],
                 subject: "Audit Request - Nova Protocols",
                 html,
             });

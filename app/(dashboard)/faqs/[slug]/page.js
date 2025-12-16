@@ -30,7 +30,7 @@ const FAQDetailPage = async ({ params }) => {
                     <AccordionItem key={index} value={`item-${index + 1}`}>
                         <AccordionTrigger className='font-bold'>{faq.question}</AccordionTrigger>
                         <AccordionContent className="flex flex-col gap-4 text-balance">
-                            <p>{faq.answer}</p>
+                            <p className="text-detail">{faq.answer}</p>
                         </AccordionContent>
                     </AccordionItem>
                 ))}

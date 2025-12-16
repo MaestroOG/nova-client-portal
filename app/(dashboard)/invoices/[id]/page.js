@@ -6,11 +6,16 @@ import parse from "html-react-parser";
 import { formatDateToYMD } from "@/utils/formUtils";
 import InvoiceDeleteForm from "@/components/invoice-delete-form";
 import InvoiceEditForm from "@/components/invoice-edit-form";
+import { notFound } from "next/navigation";
 
 const InvoiceDetail = async ({ params }) => {
     const { id } = await params
 
     const invoice = await getInvoiceDetails(id);
+
+    if (!invoice) {
+        notFound();
+    }
 
     return (
         <div className="p-4">
@@ -23,12 +28,12 @@ const InvoiceDetail = async ({ params }) => {
                     </div>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                    <p>Partner: {invoice?.partner?.name}</p>
-                    <p>Date: {formatDateToYMD(invoice?.updatedAt)}</p>
-                    <p>Status: {invoice?.status}</p>
+                    <p className="text-black dark:text-white">Partner: {invoice?.partner?.name}</p>
+                    <p className="text-black dark:text-white">Date: {formatDateToYMD(invoice?.updatedAt)}</p>
+                    <p className="text-black dark:text-white">Status: {invoice?.status}</p>
 
                     <div className="mt-4">
-                        <p>{parse(invoice?.detail)}</p>
+                        <p className="**:text-black **:dark:text-white">{parse(invoice?.detail)}</p>
                     </div>
                 </CardContent>
             </Card>
