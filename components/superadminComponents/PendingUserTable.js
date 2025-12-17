@@ -12,13 +12,22 @@ import {
 } from "@/components/ui/table"
 import Image from 'next/image'
 import { useActionState, useEffect, useState } from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '../ui/dialog';
 import Link from 'next/link';
+import { Input } from "@/components/ui/input"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
 
 const PendingUserTable = ({ pendingUsers }) => {
     const [open, setOpen] = useState(false);
     const [message, addUserFormAction, isPending] = useActionState(addUser, { err: "", success: false });
     const [rejMessage, rejectUserFormAction, isRejectPending] = useActionState(rejectUser, { rejErr: "", success: false });
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [checked, setChecked] = useState(false)
+
+    const handleClick = () => {
+        setIsConfirmOpen(true);
+    }
 
     useEffect(() => {
         if (message?.success) {
@@ -43,12 +52,44 @@ const PendingUserTable = ({ pendingUsers }) => {
                             <TableCell className={'max-sm:hidden'}>{user?.name}</TableCell>
                             <TableCell className={'max-sm:hidden'}>{user?.email}</TableCell>
                             <TableCell className="text-right flex items-center justify-end gap-4">
-                                <form action={addUserFormAction}>
-                                    <input type="hidden" name='userId' value={user?._id} />
-                                    <Button type='submit' disabled={isPending}>
-                                        <Image src={'/tick.svg'} width={24} height={24} alt='tick' />
-                                    </Button>
-                                </form>
+
+
+                                <Button type='button' onClick={handleClick}>
+                                    <Image src={'/tick.svg'} width={24} height={24} alt='tick' />
+                                </Button>
+
+                                <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
+                                    <DialogContent className="sm:max-w-[425px]">
+                                        <form action={addUserFormAction}>
+                                            <DialogHeader>
+                                                <DialogTitle>Do you want to assign credit to the user?</DialogTitle>
+                                                <DialogDescription>
+                                                    You can assign credit later as well.
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            <div className="grid gap-4 mt-4">
+                                                <div className="flex items-center gap-3">
+                                                    <Checkbox checked={checked}
+                                                        onCheckedChange={(value) => setChecked(!!value)}
+                                                        id="credit" />
+                                                    <Label htmlFor="credit">Assign Credit</Label>
+                                                </div>
+                                                <div className="grid gap-3">
+                                                    <Label htmlFor="creditAmount">Credit Amount</Label>
+                                                    <Input type="number" id="creditAmount" name="creditAmount" disabled={!checked} placeholder="Enter credit amount" />
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name='userId' value={user?._id} />
+                                            <DialogFooter className={'mt-4'}>
+                                                <DialogClose asChild>
+                                                    <Button variant="outline">Cancel</Button>
+                                                </DialogClose>
+                                                <Button type="submit" disabled={isPending}>Add User</Button>
+                                            </DialogFooter>
+                                        </form>
+                                    </DialogContent>
+                                </Dialog>
+
                                 <form action={rejectUserFormAction}>
 
                                     <input type="hidden" name='userId' value={user?._id} />
@@ -61,6 +102,8 @@ const PendingUserTable = ({ pendingUsers }) => {
                         </TableRow>
                     ))}
                 </TableBody>
+
+
 
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogContent>

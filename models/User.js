@@ -114,7 +114,7 @@ const UserSchema = new Schema({
     },
     credit: {
         type: Number,
-        default: 250
+        default: 0
     }
 }, { timestamps: true })
 

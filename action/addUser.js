@@ -9,10 +9,15 @@ import nodemailer from 'nodemailer';
 
 export async function addUser(prevState, formData) {
     const userId = formData.get("userId");
+    const creditAmount = formData.get("creditAmount");
     if (!userId || typeof userId !== "string") {
         return { err: "Invalid user ID" };
     }
-    console.log("Received userId:", userId);
+    console.log("Received userId and credit amount", userId, creditAmount);
+
+    if (Number.isNaN(creditAmount)) {
+        return { err: "Invalid credit amount" };
+    }
 
     try {
         try {
@@ -31,6 +36,8 @@ export async function addUser(prevState, formData) {
         const userData = user.toObject();
         delete userData._id;
 
+        userData.credit = creditAmount;
+
         console.log("Creating new User with data:", userData);
 
         const newUser = await User.create(userData);
@@ -46,7 +53,7 @@ export async function addUser(prevState, formData) {
             },
         });
 
-        const html = generateAcceptEmailTemplate();
+        const html = generateAcceptEmailTemplate(creditAmount);
 
         await transporter.sendMail({
             from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
