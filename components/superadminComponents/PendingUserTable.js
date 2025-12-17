@@ -52,11 +52,11 @@ const PendingUserTable = ({ pendingUsers }) => {
                                 <form action={rejectUserFormAction}>
 
                                     <input type="hidden" name='userId' value={user?._id} />
-                                    <Button type='submit' disabled={isRejectPending} variant={'secondary'}>
+                                    <Button type='submit' disabled={isRejectPending}>
                                         <Image src={'/cancel.svg'} width={24} height={24} alt='cancel' />
                                     </Button>
                                 </form>
-                                <Link href={`/pending-users/${user?._id}`}><Button variant={'secondary'}><Image src={'/eye-open.svg'} width={24} height={24} alt='cancel' /></Button></Link>
+                                <Link href={`/pending-users/${user?._id}`}><Button><Image src={'/eye-open.svg'} width={24} height={24} alt='cancel' /></Button></Link>
                             </TableCell>
                         </TableRow>
                     ))}

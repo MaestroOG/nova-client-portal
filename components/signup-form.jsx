@@ -161,13 +161,13 @@ export function SignUpForm({
                                 <Input id="companyName" type="text" value={formValues.companyName} onChange={handleChange} name="companyName" className={'border border-gray-300'} required />
                             </div>
 
-                            <div className="grid gap-3">
+                            {/* <div className="grid gap-3">
                                 <div className="flex items-center gap-1">
                                     <Label htmlFor="abn" className={'text-heading'}>ABN (Australian Business Number)</Label>
                                     <span className="text-destructive">*</span>
                                 </div>
                                 <Input id="abn" type="number" value={formValues.abn} onChange={handleChange} name="abn" required className={'border border-gray-300'} />
-                            </div>
+                            </div> */}
 
                             <div className="grid gap-3">
                                 <div className="flex items-center gap-1">
