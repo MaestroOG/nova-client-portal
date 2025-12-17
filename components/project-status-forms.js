@@ -37,7 +37,7 @@ const ProjectStatusForms = ({ projectId, status }) => {
                     </form>
 
                     <form action={rejectFormAction}>
-                        <Button type='submit' disabled={rejectIsPending} variant={'outline'}>Reject</Button>
+                        <Button type='submit' disabled={rejectIsPending} variant={'destructive'}>Reject</Button>
                     </form>
                 </>
             )

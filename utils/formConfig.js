@@ -121,6 +121,56 @@ export const formConfig = {
         { label: "Additional Notes", name: "additionalNotes", type: "textarea" }
     ],
 
+    customService: [
+        {
+            label: "Business / Project Name",
+            name: "businessName",
+            type: "text",
+            required: true,
+        },
+        {
+            label: "Website / App URL (if applicable & add https:// in front of the URL)",
+            name: "websiteUrl",
+            type: "url",
+        },
+        {
+            label: "Type of Service Needed",
+            name: "serviceType",
+            type: "text",
+            required: true,
+            placeholder: "Bug fix, feature update, integration, consultation, etc.",
+        },
+        {
+            label: "Brief Description of the Request",
+            name: "serviceDescription",
+            type: "textarea",
+            required: true,
+        },
+        {
+            label: "Is this an urgent request?",
+            name: "isUrgent",
+            type: "text",
+            required: true,
+        },
+        {
+            label: "Preferred Timeline",
+            name: "timeline",
+            type: "text",
+            placeholder: "ASAP, within a week, flexible, etc.",
+        },
+        {
+            label: "Do you have design files, specs, or references?",
+            name: "hasAssets",
+            type: "text",
+        },
+        {
+            label: "Additional Notes or Requirements",
+            name: "additionalNotes",
+            type: "textarea",
+        },
+    ]
+
+
 }
 
 export const auditFormConfig = {
@@ -511,7 +561,25 @@ export const pricingConfig = {
                 description: ""
             },
         ]
-    }
+    },
+    customService: {
+        pricing: [
+            // {
+            //     id: "managed-web-support-standard",
+            //     label: "Managed Web Support",
+            //     price: "$99",
+            //     period: "/month",
+            //     description: "Ongoing website maintenance, security monitoring, and performance optimization."
+            // },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
 }
 
 
