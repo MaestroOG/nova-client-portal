@@ -57,9 +57,9 @@ const NoteItem = ({ note, isUnread, onMarkAsRead, user }) => {
                                 {note?.createdBy === null ? "Nova Protocols Team" : note?.createdBy?.name}
                             </span>{" "}
                             - {timeAgo(note?.createdAt)} at {formatTo12HourTime(note?.createdAt)}
-                            {/* {isUnread && (
-                                <span className="text-red-500 text-xl ml-2 leading-none">•</span>
-                            )} */}
+                            {isUnread && (
+                                <span className="text-destructive text-xl ml-2 leading-none">•</span>
+                            )}
                         </p>
                         <span className="text-detail text-xs">
                             {note?.createdBy?.companyName}
