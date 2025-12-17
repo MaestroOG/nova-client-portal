@@ -22,11 +22,14 @@ const PendingUserTable = ({ pendingUsers }) => {
     const [open, setOpen] = useState(false);
     const [message, addUserFormAction, isPending] = useActionState(addUser, { err: "", success: false });
     const [rejMessage, rejectUserFormAction, isRejectPending] = useActionState(rejectUser, { rejErr: "", success: false });
+    const [selectedUserId, setSelectedUserId] = useState(null);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [checked, setChecked] = useState(false)
+    const [creditStates, setCreditStates] = useState({});
 
-    const handleClick = () => {
-        setIsConfirmOpen(true);
+    const handleClick = (userId) => {
+        setSelectedUserId(userId);
+        setCreditStates(prev => ({ ...prev, [userId]: { checked: false, amount: '' } }));
     }
 
     useEffect(() => {
@@ -54,11 +57,11 @@ const PendingUserTable = ({ pendingUsers }) => {
                             <TableCell className="text-right flex items-center justify-end gap-4">
 
 
-                                <Button type='button' onClick={handleClick}>
+                                <Button type='button' onClick={() => handleClick(user?._id)}>
                                     <Image src={'/tick.svg'} width={24} height={24} alt='tick' />
                                 </Button>
 
-                                <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
+                                <Dialog open={selectedUserId === user?._id} onOpenChange={(open) => !open && setSelectedUserId(null)}>
                                     <DialogContent className="sm:max-w-[425px]">
                                         <form action={addUserFormAction}>
                                             <DialogHeader>
@@ -69,14 +72,17 @@ const PendingUserTable = ({ pendingUsers }) => {
                                             </DialogHeader>
                                             <div className="grid gap-4 mt-4">
                                                 <div className="flex items-center gap-3">
-                                                    <Checkbox checked={checked}
-                                                        onCheckedChange={(value) => setChecked(!!value)}
+                                                    <Checkbox checked={creditStates[user?._id]?.checked || false}
+                                                        onCheckedChange={(value) => setCreditStates(prev => ({
+                                                            ...prev,
+                                                            [user._id]: { ...prev[user._id], checked: !!value }
+                                                        }))}
                                                         id="credit" />
                                                     <Label htmlFor="credit">Assign Credit</Label>
                                                 </div>
                                                 <div className="grid gap-3">
                                                     <Label htmlFor="creditAmount">Credit Amount</Label>
-                                                    <Input type="number" id="creditAmount" name="creditAmount" disabled={!checked} placeholder="Enter credit amount" />
+                                                    <Input type="number" min="0" id="creditAmount" name="creditAmount" disabled={!creditStates[user?._id]?.checked} placeholder="Enter credit amount" />
                                                 </div>
                                             </div>
                                             <input type="hidden" name='userId' value={user?._id} />

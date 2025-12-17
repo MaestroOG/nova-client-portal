@@ -14,8 +14,8 @@ export async function addUser(prevState, formData) {
         return { err: "Invalid user ID" };
     }
     console.log("Received userId and credit amount", userId, creditAmount);
-
-    if (Number.isNaN(creditAmount)) {
+    const parsedCredit = Number(creditAmount);
+    if (Number.isNaN(parsedCredit) || parsedCredit < 0) {
         return { err: "Invalid credit amount" };
     }
 
@@ -36,7 +36,7 @@ export async function addUser(prevState, formData) {
         const userData = user.toObject();
         delete userData._id;
 
-        userData.credit = creditAmount;
+        userData.credit = parsedCredit;
 
         console.log("Creating new User with data:", userData);
 
