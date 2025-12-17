@@ -121,7 +121,7 @@ export const generatePartnerShipEndEmail = (email, name, companyName, endDate, s
                 <tr>
                   <td align="left" style="border-radius:8px;" bgcolor="#430D4B">
                     <a
-                      href="${supportEmail}"
+                      href="mailto:${supportEmail}"
                       target="_blank"
                       class="btn"
                       style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:20px;text-decoration:none;padding:12px 18px;display:inline-block;border-radius:8px;background:#430D4B;color:#ffffff;font-weight:700;"

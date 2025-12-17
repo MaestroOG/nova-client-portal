@@ -25,7 +25,7 @@ export async function deletePartner(prevState, formData) {
     await DeletedUser.create(userData)
 
     if (sendFinalEmail) {
-        const html = generatePartnerShipEndEmail(user?.email, user?.name, user?.companyName, todaysDate, 'support@novaprotocols.com')
+        const html = generatePartnerShipEndEmail(user?.email, user?.name, user?.companyName, todaysDate, 'team@novaprotocols.com')
         const transporter = createTransporter();
         await transporter.sendMail({
             from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',

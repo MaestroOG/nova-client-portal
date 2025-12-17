@@ -505,7 +505,7 @@ export const generateApplicationReceivedUserEmail = (name, companyName, email) =
                 Nova Protocols
               </p>
               <p class="muted" style="margin:8px 0 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6b7280;">
-                Need help? <a href="mailto:support@novaprotocols.com" style="color:#2563eb;text-decoration:none;">support@novaprotocols.com</a>
+                Need help? <a href="mailto:team@novaprotocols.com" style="color:#2563eb;text-decoration:none;">team@novaprotocols.com</a>
               </p>
             </td>
           </tr>
