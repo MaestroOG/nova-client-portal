@@ -43,7 +43,7 @@ const ChangePicturePage = () => {
                             {state.success ? "✅ Success" : "⚠️ Error"}
                         </DialogTitle>
                     </DialogHeader>
-                    <p>{state.message}</p>
+                    {state.message && <p>{state.message}</p>}
                 </DialogContent>
             </Dialog>
         </>

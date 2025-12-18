@@ -77,9 +77,6 @@ const HomePage = async ({ searchParams }) => {
   }
   const latestNotification = await getLatestUnreadNotification();
 
-
-  console.log(projects);
-
   return (
     <>
 
@@ -94,7 +91,7 @@ const HomePage = async ({ searchParams }) => {
 
       <IntroText />
 
-      <ProjectCardsGrid user={user} filter={filter} archivedCount={archivedProjects} runningProjectsThisMonth={runningProjectsThisMonth || 0} projects={projects} completedProjectsThisMonth={completedProjectsThisMonth || 0} pendingProjectsThisMonth={pendingProjectsThisMonth || pendingProjectsThisMonth.length} />
+      <ProjectCardsGrid user={user} filter={filter} archivedCount={archivedProjects} runningProjectsThisMonth={runningProjectsThisMonth || 0} projects={projects} completedProjectsThisMonth={completedProjectsThisMonth || 0} pendingProjectsThisMonth={pendingProjectsThisMonth || 0} />
 
       <Container className="bg-white p-4 rounded-lg">
         <div className="flex items-center md:justify-between gap-4">

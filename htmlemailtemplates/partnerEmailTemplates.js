@@ -255,7 +255,7 @@ export function generateAuditEmail({ companyName, auditTitle, service, fields })
 }
 
 
-export function generateTeammaterWelcomeEmail(name, companyName) {
+export function generateTeammateWelcomeEmail(name, companyName) {
   return `
   <!DOCTYPE html>
 <html lang="en">
@@ -273,8 +273,8 @@ export function generateTeammaterWelcomeEmail(name, companyName) {
           
           <!-- Header -->
           <tr>
-            <td style="background:oklch(0.2861 0.1154 322.1426); padding:28px; text-align:center;">
-              <h1 style="margin:0; color:#000000; font-size:24px; font-weight:600;">
+            <td style="background:#430D4B; padding:28px; text-align:center;">
+              <h1 style="margin:0; color:#ffffff; font-size:24px; font-weight:600;">
                 Welcome to ${companyName}
               </h1>
             </td>
@@ -299,8 +299,8 @@ export function generateTeammaterWelcomeEmail(name, companyName) {
 
               <!-- CTA -->
               <div style="text-align:center; margin:32px 0;">
-                <a href="{https://portal.novaprotocols.com/login}" target="_blank"
-                   style="background:oklch(0.2861 0.1154 322.1426); color:#ffffff; text-decoration:none; padding:14px 28px;
+                <a href="https://portal.novaprotocols.com/login" target="_blank"
+                   style="background:#430D4B; color:#ffffff; text-decoration:none; padding:14px 28px;
                           border-radius:8px; font-size:15px; font-weight:600; display:inline-block;">
                   Go to Portal
                 </a>

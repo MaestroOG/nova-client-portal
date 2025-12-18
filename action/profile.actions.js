@@ -105,7 +105,7 @@ export async function changeProfilePicture(prevState, formData) {
         console.error("Error uploading image:", error);
         return {
             success: false,
-            message: 'Image is required',
+            message: 'Failed to upload image. Please try again.',
         }
     }
 

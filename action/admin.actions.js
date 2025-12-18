@@ -1,6 +1,6 @@
 'use server'
 
-import { generateTeammaterWelcomeEmail } from "@/htmlemailtemplates/partnerEmailTemplates";
+import { generateTeammateWelcomeEmail } from "@/htmlemailtemplates/partnerEmailTemplates";
 import { addExpenditure } from "@/lib/admin";
 import { uploadFilesToCloudinary } from "@/lib/cloudinary";
 import { connectDB } from "@/lib/mongodb";
@@ -632,8 +632,27 @@ export async function AddTeammateToAgency(prevState, formData) {
     const role = 'team-member';
     const credit = 0;
 
+
+
     try {
         await connectDB();
+
+        const currentUser = await getUser();
+
+        if (currentUser?.role !== 'superadmin') {
+            return {
+                success: false,
+                message: 'You do not have permission to perform this action'
+            }
+        }
+
+        // Add input validation here
+        if (!email || !password || !name || !agency) {
+            return {
+                success: false,
+                message: 'Required fields are missing'
+            }
+        }
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -647,6 +666,13 @@ export async function AddTeammateToAgency(prevState, formData) {
             companyName: agency,
             role: "user",
         });
+
+        if (!companyUser) {
+            return {
+                success: false,
+                message: 'Agency not found. Please verify the agency name.'
+            }
+        }
 
         const {
             companyName,
@@ -680,7 +706,6 @@ export async function AddTeammateToAgency(prevState, formData) {
             role,
             credit,
             profilePictureUrl: "/placeholder-avatar.svg",
-            companyName,
             abn,
             companyWebsite,
             businessAddress,
@@ -707,7 +732,7 @@ export async function AddTeammateToAgency(prevState, formData) {
 
         const transporter = createTransporter();
 
-        const html = generateTeammaterWelcomeEmail(name, agency);
+        const html = generateTeammateWelcomeEmail(name, agency);
 
         await transporter.sendMail({
             from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',

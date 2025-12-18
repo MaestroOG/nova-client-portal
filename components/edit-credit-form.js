@@ -50,7 +50,7 @@ const EditCreditForm = ({ users }) => {
                         <SelectContent>
                             {users?.map((user) => (
                                 <SelectItem key={user?._id} value={user?._id}>
-                                    {user?.name} - {user?.position}
+                                    {[user?.name, user?.position].filter(Boolean).join(' - ') || 'Unknown Partner'}
                                 </SelectItem>
                             ))}
                         </SelectContent>

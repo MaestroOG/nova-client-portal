@@ -41,7 +41,7 @@ const SuperAdminPage = async () => {
                     <Button variant="link">See All Users</Button>
                 </Link>
 
-                <Link href="/admin/add-teamate-to-an-agency">
+                <Link href="/admin/add-teammate-to-an-agency">
                     <Button variant="link">Add Teammate to an Agency</Button>
                 </Link>
 

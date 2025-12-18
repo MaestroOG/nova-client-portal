@@ -47,7 +47,7 @@ const AddTeammateToAgencyForm = ({ companies }) => {
                 </div>
                 <div className="grid gap-3">
                     <div className="flex items-center">
-                        <Label htmlFor="password">Password</Label>
+                        <Label htmlFor={id}>Password</Label>
                     </div>
                     <div className="relative">
                         <Input
@@ -64,7 +64,7 @@ const AddTeammateToAgencyForm = ({ companies }) => {
                             onClick={toggleVisibility}
                             aria-label={isVisible ? "Hide password" : "Show password"}
                             aria-pressed={isVisible}
-                            aria-controls="password"
+                            aria-controls={id}
                         >
                             {isVisible ? (
                                 <EyeOffIcon size={16} aria-hidden="true" />

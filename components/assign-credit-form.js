@@ -43,7 +43,7 @@ const AssignCreditForm = ({ users }) => {
                         <SelectContent>
                             {users?.map((user) => (
                                 <SelectItem key={user?._id} value={user?._id}>
-                                    {user?.name} - {user?.position}
+                                    {user?.name || 'Unknown'} - {user?.position || 'No Position'}
                                 </SelectItem>
                             ))}
                         </SelectContent>
