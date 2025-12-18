@@ -2,7 +2,7 @@ import Container from "@/components/dashboardComponents/Container"
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
 import { getUser } from "@/lib/user"
-import { getAllComments, getAllCommentsOnUserProjects, getAllUnreadComments } from "@/lib/admin"
+import { getAllComments, getAllCommentsOnAgencyProjects, getAllCommentsOnUserProjects, getAllUnreadComments } from "@/lib/admin"
 import { formatReadableDate, formatTo12HourTime, isoDateToLocal12HourTime, timeAgo } from "@/utils/formUtils";
 import CommentFilterForm from "@/components/comment-filter-form";
 
@@ -23,6 +23,8 @@ const CommentsPage = async ({ searchParams }) => {
 
     if (user.role !== 'superadmin') {
         data = await getAllCommentsOnUserProjects(user._id);
+    } else if (user?.role === 'team-member') {
+        data = await getAllCommentsOnAgencyProjects(user?.companyName);
     } else {
         if (filter === 'unread') {
             data = await getAllUnreadComments(user._id); // returns array of unread notes
@@ -32,6 +34,8 @@ const CommentsPage = async ({ searchParams }) => {
     }
 
     const notes = filter === 'unread' || user.role !== 'superadmin' ? data : data?.notes || [];
+
+    console.log("CommentsPage notes:", notes);
     return (
         <Container className="bg-white p-2 md:p-4">
             {/* Header */}
@@ -61,13 +65,13 @@ const CommentsPage = async ({ searchParams }) => {
                                         {isUnread && (
                                             <span className="absolute top-4 right-4 h-3 w-3 rounded-full bg-red" />
                                         )}
-                                        <AlertTitle className="font-semibold text-base md:text-lg break-words pr-8">
+                                        <AlertTitle className="font-semibold text-base md:text-lg wrap-break-word pr-8">
                                             {note?.createdBy?.name} –{" "}
                                             {formatReadableDate(note?.createdAt)} –{" "}
                                             {timeAgo(note?.createdAt)} at{" "}
                                             {formatTo12HourTime(note?.createdAt)}
                                         </AlertTitle>
-                                        <AlertDescription className="mt-1 break-words">
+                                        <AlertDescription className="mt-1 wrap-break-word">
                                             <span className="font-bold">
                                                 on {note.projectId?.projectTitle}
                                             </span>

@@ -91,11 +91,22 @@ export async function changeProfilePicture(prevState, formData) {
     const user = await getUser();
     let imageUrl;
 
+    if (!image) {
+        return {
+            success: false,
+            message: 'Image is required',
+        }
+    }
+
     try {
         imageUrl = await uploadImage(image)
         await User.findByIdAndUpdate(user?._id, { profilePictureUrl: imageUrl })
     } catch (error) {
-        throw new Error('Image upload failed. Post was not created. Please try again later')
+        console.error("Error uploading image:", error);
+        return {
+            success: false,
+            message: 'Image is required',
+        }
     }
 
     revalidatePath('/', "layout")

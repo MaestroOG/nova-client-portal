@@ -1,5 +1,6 @@
 'use server'
 
+import { generateTeammaterWelcomeEmail } from "@/htmlemailtemplates/partnerEmailTemplates";
 import { addExpenditure } from "@/lib/admin";
 import { uploadFilesToCloudinary } from "@/lib/cloudinary";
 import { connectDB } from "@/lib/mongodb";
@@ -10,6 +11,8 @@ import Project from "@/models/Project";
 import Resource from "@/models/Resource";
 import User from "@/models/User";
 import { getYouTubeEmbedUrl } from "@/utils/formUtils";
+import { createTransporter } from "@/utils/transporterFns";
+import { hashPassword } from "@/utils/validatorFns";
 import { revalidatePath } from "next/cache";
 
 export async function createManager(prevState, formData) {
@@ -617,4 +620,113 @@ export async function deleteCategory(prevState, formData) {
         }
     }
 
+}
+
+export async function AddTeammateToAgency(prevState, formData) {
+    const email = formData.get('email')?.trim();
+    const password = formData.get('password')?.trim();
+    const name = formData.get('name')?.trim();
+    const agency = formData.get('agency')?.trim();
+    const position = formData.get('position')?.trim();
+    const phoneNum = formData.get('phoneNum')?.trim();
+    const role = 'team-member';
+    const credit = 0;
+
+    try {
+        await connectDB();
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return {
+                success: false,
+                message: 'A user with this email already exists.'
+            }
+        }
+
+        const companyUser = await User.findOne({
+            companyName: agency,
+            role: "user",
+        });
+
+        const {
+            companyName,
+            abn,
+            companyWebsite,
+            businessAddress,
+            yearsInBiz,
+            numOfActiveClients,
+            socialMediaLinks,
+            companyStructure,
+            primaryServices,
+            industriesWorkWith,
+            regionsServe,
+            serviceModel,
+            monthlyProjectVolume,
+            isUsingWhiteLabelProvider,
+            challengeDetail,
+            serviceManager,
+        } = companyUser.toObject();
+
+        const hashedPassword = await hashPassword(password);
+
+        const newTeammate = await User.create({
+            email,
+            password: hashedPassword,
+            name,
+            position,
+            phoneNum,
+            contactEmail: email,
+            companyName,
+            role,
+            credit,
+            profilePictureUrl: "/placeholder-avatar.svg",
+            companyName,
+            abn,
+            companyWebsite,
+            businessAddress,
+            yearsInBiz,
+            numOfActiveClients,
+            socialMediaLinks,
+            companyStructure,
+            primaryServices,
+            industriesWorkWith,
+            regionsServe,
+            serviceModel,
+            monthlyProjectVolume,
+            isUsingWhiteLabelProvider,
+            challengeDetail,
+            serviceManager,
+        });
+
+        if (!newTeammate) {
+            return {
+                success: false,
+                message: 'Failed to add teammate. Please try again.'
+            }
+        }
+
+        const transporter = createTransporter();
+
+        const html = generateTeammaterWelcomeEmail(name, agency);
+
+        await transporter.sendMail({
+            from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+            to: ['portalnovaprotocols@gmail.com', email, 'team@novaprotocols.com'],
+            subject: "You’ve been added to the team",
+            html,
+        })
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: 'Teammate added successfully.'
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            success: false,
+            message: 'Something went wrong'
+        }
+    }
 }

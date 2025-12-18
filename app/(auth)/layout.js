@@ -9,7 +9,7 @@ export default function LoginLayout({ children }) {
             <body>
                 <ThemeProvider
                     attribute="class"
-                    defaultTheme="system"
+                    defaultTheme="light"
                     enableSystem
                     disableTransitionOnChange
                 >

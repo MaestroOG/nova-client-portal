@@ -5,12 +5,16 @@ import Container from './Container'
 import { useRouter, useSearchParams } from 'next/navigation';
 import ResetFilterButton from './ResetFilterButton';
 
-const ProjectCardsGrid = ({ filter, archivedCount, runningProjectsThisMonth, pendingProjectsThisMonth, completedProjectsThisMonth, projects }) => {
+const ProjectCardsGrid = ({ user, filter, archivedCount, runningProjectsThisMonth, pendingProjectsThisMonth, completedProjectsThisMonth, projects }) => {
 
     const router = useRouter();
     const searchParams = useSearchParams();
 
     const handleFilter = (filter) => {
+
+        if (user?.role === 'team-member') {
+            return;
+        }
         const params = new URLSearchParams(searchParams);
         params.set('filter', filter);
         router.push(`?${params.toString()}`, { scroll: false });

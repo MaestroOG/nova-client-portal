@@ -207,7 +207,7 @@ export const generateAcceptEmailTemplate = (creditAmount) => {
       <td style="padding:40px 30px;">
         <h2 style="margin:0; font-size:22px; color:#0d47a1; font-weight:600;">🎉 Congratulations!</h2>
         <p style="font-size:16px; line-height:1.6; margin-top:15px;">
-          We're excited to let you know that your request for a <strong>partnership with Nova Protocols</strong> has been <span style="color:green; font-weight:bold;">accepted and a credit of ${creditAmount} has been allotted</span>.
+          We're excited to let you know that your request for a <strong>partnership with Nova Protocols</strong> has been <span style="color:green; font-weight:bold;">accepted ${!creditAmount && creditAmount > 0 && `and a credit of ${creditAmount} has been allotted`}.
         </p>
         <!-- New credit line -->
         <p style="font-size:16px; line-height:1.6;">

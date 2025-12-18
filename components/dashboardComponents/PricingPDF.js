@@ -8,7 +8,7 @@ const PricingPDF = () => {
     if (loading) return <p className="text-center p-4 text-black">Loading pricing document...</p>;
     if (error) return <p className="text-center p-4 text-black">Unable to load pricing document</p>;
 
-    const pdfUrl = '/nova-pricelist.pdf';
+    const pdfUrl = 'https://res.cloudinary.com/dux79mjbb/image/upload/v1766068828/nova-pricelist_lkk79h.pdf';
 
     return (
         <embed

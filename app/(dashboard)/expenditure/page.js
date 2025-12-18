@@ -3,7 +3,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { Card, CardContent } from "@/components/ui/card";
 import { getRunningProjectsThisMonth } from '@/lib/projects';
 import { getUser } from '@/lib/user';
-import { getAllRunningProjectsThisMonth, getTotalExpenditureForUser, getTotalExpenditure } from '@/lib/admin';
+import { getAllRunningProjectsThisMonth, getTotalExpenditureForUser, getTotalExpenditure, getAllRunningAgencyProjects } from '@/lib/admin';
 
 const ExpenditurePage = async () => {
 
@@ -14,6 +14,9 @@ const ExpenditurePage = async () => {
 
     if (user?.role === 'user') {
         runningProjectsThisMonth = await getRunningProjectsThisMonth();
+        totalSpent = await getTotalExpenditureForUser(user?._id);
+    } else if (user?.role === 'team-member') {
+        runningProjectsThisMonth = await getAllRunningAgencyProjects(user?.companyName);
         totalSpent = await getTotalExpenditureForUser(user?._id);
     } else {
         runningProjectsThisMonth = await getAllRunningProjectsThisMonth();

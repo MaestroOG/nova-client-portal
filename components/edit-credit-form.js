@@ -50,7 +50,7 @@ const EditCreditForm = ({ users }) => {
                         <SelectContent>
                             {users?.map((user) => (
                                 <SelectItem key={user?._id} value={user?._id}>
-                                    {user?.companyName}
+                                    {user?.name} - {user?.position}
                                 </SelectItem>
                             ))}
                         </SelectContent>

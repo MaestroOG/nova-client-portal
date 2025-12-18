@@ -37,6 +37,14 @@ const SuperAdminPage = async () => {
                     <Button variant="link">Assign Credit</Button>
                 </Link>
 
+                <Link href="/admin/all-users">
+                    <Button variant="link">See All Users</Button>
+                </Link>
+
+                <Link href="/admin/add-teamate-to-an-agency">
+                    <Button variant="link">Add Teammate to an Agency</Button>
+                </Link>
+
                 {user?.name === "Muneeb Ur Rehman" || user?.name === "Nabeel Ahmad" && (
                     <Link href="/admin/create-superadmin">
                         <Button variant="link">Assign a Superadmin</Button>

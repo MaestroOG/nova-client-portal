@@ -9,7 +9,7 @@ import { getAllArchivedProjects, getAllArchivedProjectsCount, getAllCompletedPro
 import { Suspense } from "react"
 import HomePageDialog from "@/components/dashboardComponents/HomePageDialog"
 import { getLatestUnreadNotification } from "@/lib/notifications"
-import { getAllCompletedProjectsThisMonth, getAllManagerRelatedProjects, getAllPendingProjectsThisMonth, getAllProjects, getAllRunningProjectsThisMonth } from "@/lib/admin"
+import { getAllAgencyArchivedProjectsCount, getAllAgencyProjects, getAllCompletedAgencyProjects, getAllCompletedProjectsThisMonth, getAllPendingAgencyProjects, getAllPendingProjectsThisMonth, getAllProjects, getAllRunningAgencyProjects, getAllRunningProjectsThisMonth } from "@/lib/admin"
 import ProjectCardsGrid from "@/components/dashboardComponents/ProjectCardsGrid"
 import MainProjectCard from "@/components/dashboardComponents/MainProjectCard"
 
@@ -49,13 +49,14 @@ const HomePage = async ({ searchParams }) => {
     pendingProjectsThisMonth = await getPendingProjectsThisMonth();
     runningProjectsThisMonth = await getRunningProjectsThisMonth();
     archivedProjects = await getArchivedProjectsCount();
-  } else if (user?.role === 'manager') {
-    projects = await getAllManagerRelatedProjects();
-    completedProjectsThisMonth = await getAllCompletedProjectsThisMonth();
-    pendingProjectsThisMonth = await getAllPendingProjectsThisMonth();
-    runningProjectsThisMonth = await getAllRunningProjectsThisMonth();
-    archivedProjects = await getAllArchivedProjectsCount();
-  } else {
+  } else if (user?.role === 'team-member') {
+    projects = await getAllAgencyProjects(user?.companyName, user?._id);
+    completedProjectsThisMonth = await getAllCompletedAgencyProjects(user?.companyName);
+    pendingProjectsThisMonth = await getAllPendingAgencyProjects(user?.companyName);
+    runningProjectsThisMonth = await getAllRunningAgencyProjects(user?.companyName);
+    archivedProjects = await getAllAgencyArchivedProjectsCount(user?.companyName);
+  }
+  else {
     if (filter === 'finished') {
       projects = await getAllCompletedProjects();
     } else if (filter === 'running') {
@@ -77,6 +78,8 @@ const HomePage = async ({ searchParams }) => {
   const latestNotification = await getLatestUnreadNotification();
 
 
+  console.log(projects);
+
   return (
     <>
 
@@ -91,14 +94,14 @@ const HomePage = async ({ searchParams }) => {
 
       <IntroText />
 
-      <ProjectCardsGrid filter={filter} archivedCount={archivedProjects} runningProjectsThisMonth={runningProjectsThisMonth} projects={projects} completedProjectsThisMonth={completedProjectsThisMonth} pendingProjectsThisMonth={pendingProjectsThisMonth} />
+      <ProjectCardsGrid user={user} filter={filter} archivedCount={archivedProjects} runningProjectsThisMonth={runningProjectsThisMonth || 0} projects={projects} completedProjectsThisMonth={completedProjectsThisMonth || 0} pendingProjectsThisMonth={pendingProjectsThisMonth || pendingProjectsThisMonth.length} />
 
       <Container className="bg-white p-4 rounded-lg">
         <div className="flex items-center md:justify-between gap-4">
           <h1 className="text-xl font-medium">Your Projects</h1>
-          <div className="flex items-center gap-2">
+          {user?.role !== 'team-member' && <div className="flex items-center gap-2">
             <Link href={'/expenditure'}><Button>See {user?.role === 'superadmin' ? 'Generated Revenue' : 'Monthly Spending'}</Button></Link>
-          </div>
+          </div>}
         </div>
 
         <div className="grid grid-cols-1 items-stretch md:grid-cols-4 mt-5 gap-4">
