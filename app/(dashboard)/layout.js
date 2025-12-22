@@ -6,6 +6,7 @@ import TawkToChat from "@/components/TawkToChat";
 import { getUser, getUserFromDB } from "@/lib/user";
 import NextTopLoader from "nextjs-toploader";
 import { ThemeProvider } from "@/components/theme-provider";
+import WhatsappButton from "@/components/dashboardComponents/whatsapp-button";
 
 export const metadata = {
   title: "Nova Protocols Client Portal",
@@ -42,7 +43,7 @@ export default async function RootLayout({ children }) {
             <Header userFromDB={userFromDB} pfpLink={user?.profilePictureUrl} />
             {children}
           </MainContent>
-          {/* {user && user.role !== "superadmin" && <TawkToChat />} */}
+          <WhatsappButton />
         </ThemeProvider>
       </body>
     </html>
