@@ -75,10 +75,12 @@ const CreateAuditForm = ({ partners, user, service, fields }) => {
                         {fields?.map((field) => (
                             <>
                                 <div key={field.name} className="flex flex-col gap-2">
-                                    <Label className="block font-medium">
-                                        {field.label}{" "}
-                                        {field.required && <span className="text-red-500">*</span>}
-                                    </Label>
+                                    {field.type !== 'checkbox' && (
+                                        <Label className="block font-medium">
+                                            {field.label}{" "}
+                                            {field.required && <span className="text-red-500">*</span>}
+                                        </Label>
+                                    )}
 
                                     {field.type === "checkbox" ? (
                                         <div className="flex items-center gap-2">
