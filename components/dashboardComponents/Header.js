@@ -223,6 +223,9 @@ const Header = ({ userFromDB, pfpLink }) => {
                             <DrawerHeader className="shrink-0">
                                 <div className="mt-2">
                                     {/* You can add stuff here if needed */}
+                                    <DrawerClose asChild>
+                                        <X className="text-foreground" size={23} />
+                                    </DrawerClose>
                                 </div>
                             </DrawerHeader>
 
