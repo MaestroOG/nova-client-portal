@@ -210,7 +210,12 @@ export async function addNote(id, prevState, formData) {
 export async function ApproveProject(projectId, prevState, formData) {
     const user = await getUser();
     await connectDB();
-    await Project.findByIdAndUpdate(projectId, { status: 'in-progress' });
+    const updatedProject = await Project.findByIdAndUpdate(
+        projectId,
+        { $set: { status: 'in-progress' } },
+        { new: true, runValidators: true }
+    );
+
     revalidatePath('/', "layout");
 
     const project = await Project.findById(projectId).populate('createdBy');

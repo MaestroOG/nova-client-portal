@@ -93,14 +93,6 @@ export const generateProjectStatusUpdateEmail = (projectTitle, newStatus, name, 
                     </span>
                   </td>
                 </tr>
-                <tr>
-                  <td width="120" class="fallback-font muted" style="padding:6px 0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;">
-                    Updated At
-                  </td>
-                  <td class="fallback-font text" style="padding:6px 0;font-size:14px;color:#374151;">
-                    ${updatedAt}
-                  </td>
-                </tr>
               </table>
             </td>
           </tr>
