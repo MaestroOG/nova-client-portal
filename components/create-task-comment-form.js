@@ -12,7 +12,11 @@ const JoditEditor = dynamic(() => import("jodit-react"), {
 const CreateTaskCommentForm = ({ id }) => {
     const [value, setValue] = useState("");
     const contentRef = useRef(null);
-    const [state, formAction, isPending] = useActionState(createTaskComment, {})
+    const [state, formAction, isPending] = useActionState(createTaskComment, {});
+
+    const editorConfig = {
+        statusbar: false
+    }
 
     const handleSubmit = (e) => {
         setValue("");
@@ -25,7 +29,7 @@ const CreateTaskCommentForm = ({ id }) => {
                 value={value}
                 tabIndex={1}
                 onBlur={newContent => setValue(newContent)}
-                onChange={newContent => { }}
+                config={editorConfig}
             />
             <input type="hidden" name="commentText" value={value} />
             <input type="hidden" name='taskId' value={id} />

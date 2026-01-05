@@ -13,6 +13,10 @@ const JoditEditor = dynamic(() => import("jodit-react"), {
 
 const DiscussionCommentBox = ({ id }) => {
 
+    const editorConfig = {
+        statusbar: false
+    }
+
     const [value, setValue] = useState("");
     const contentRef = useRef(null);
 
@@ -26,7 +30,7 @@ const DiscussionCommentBox = ({ id }) => {
                     value={value}
                     tabIndex={1}
                     onBlur={newContent => setValue(newContent)}
-                    onChange={newContent => { }}
+                    config={editorConfig}
                 />
                 <input type="hidden" name="opinion" value={value} />
                 <input type="hidden" name="discussionId" value={id} />
