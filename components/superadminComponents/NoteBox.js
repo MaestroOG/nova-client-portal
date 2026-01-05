@@ -20,7 +20,8 @@ const NoteBox = ({ user, id }) => {
         style: {
             // This targets the body/content of the editor
             color: '#000000',
-        }
+        },
+        statusbar: false
     };
 
     useEffect(() => {
