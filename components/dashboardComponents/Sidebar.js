@@ -35,7 +35,7 @@ const Sidebar = () => {
             title: "Dashboard",
             href: "/",
         },
-        ...(user?.role !== "manager"
+        ...(user?.role !== "manager" || user?.role !== 'team-member'
             ? [
                 {
                     icon: <FolderCog />,

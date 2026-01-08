@@ -77,7 +77,7 @@ const Header = ({ userFromDB, pfpLink }) => {
             title: "Dashboard",
             href: "/",
         },
-        ...(userFromDB?.role !== "manager"
+        ...(userFromDB?.role !== "manager" || userFromDB?.role !== 'team-member'
             ? [
                 {
                     icon: <FolderCog />,
