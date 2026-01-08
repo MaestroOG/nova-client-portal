@@ -59,11 +59,15 @@ const Sidebar = () => {
             title: "FAQs",
             href: '/faqs'
         },
-        {
-            icon: <CircleDollarSign />,
-            title: "Pricing",
-            href: "/pricing"
-        },
+        ...(user?.role !== "team-member"
+            ? [
+                {
+                    icon: <CircleDollarSign />,
+                    title: "Pricing",
+                    href: "/pricing",
+                },
+            ]
+            : []),
         {
             icon: <MessageCircle />,
             title: "Comments",

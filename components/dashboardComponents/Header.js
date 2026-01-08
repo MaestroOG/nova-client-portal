@@ -101,11 +101,15 @@ const Header = ({ userFromDB, pfpLink }) => {
             title: "FAQs",
             href: '/faqs'
         },
-        {
-            icon: <CircleDollarSign />,
-            title: "Pricing",
-            href: "/pricing"
-        },
+        ...(userFromDB?.role !== "team-member"
+            ? [
+                {
+                    icon: <CircleDollarSign />,
+                    title: "Pricing",
+                    href: "/pricing",
+                },
+            ]
+            : []),
         {
             icon: <MessageCircle />,
             title: "Comments",
