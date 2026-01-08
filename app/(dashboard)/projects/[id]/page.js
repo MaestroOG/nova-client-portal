@@ -29,9 +29,15 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
 
     const isUnread = user ? notes?.some(note => !(note?.readBy ?? []).includes(user._id)) : false;
 
-    const fields = Object.entries(projectDetails?.fields || {}).filter(
+    let fields = Object.entries(projectDetails?.fields || {}).filter(
         ([key]) => key !== "selectedPackage"
     );
+    const EXCLUDED_KEYS = ["selectedPackage", "adBudget", "budgetRange"];
+    if (user?.role === 'team-member') {
+        fields = Object.entries(projectDetails?.fields || {}).filter(
+            ([key]) => !EXCLUDED_KEYS.includes(key)
+        );
+    }
 
     if (!projectDetails) {
         notFound();
@@ -91,18 +97,20 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                     })}
 
                     {/* Selected Package Card */}
-                    <Card className="rounded-2xl shadow-sm border border-border hover:shadow-md transition-all duration-200">
-                        <CardHeader>
-                            <CardTitle className="text-sm text-muted-foreground tracking-wide">
-                                Selected Package
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-lg font-semibold text-foreground">
-                                {projectDetails?.packageSelected || "Not provided"}
-                            </p>
-                        </CardContent>
-                    </Card>
+                    {user?.role !== 'team-member' && (
+                        <Card className="rounded-2xl shadow-sm border border-border hover:shadow-md transition-all duration-200">
+                            <CardHeader>
+                                <CardTitle className="text-sm text-muted-foreground tracking-wide">
+                                    Selected Package
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-lg font-semibold text-foreground">
+                                    {projectDetails?.packageSelected || "Not provided"}
+                                </p>
+                            </CardContent>
+                        </Card>
+                    )}
                 </div>
             </Container>
 
