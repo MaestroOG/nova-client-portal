@@ -10,10 +10,12 @@ import nodemailer from 'nodemailer';
 export async function addUser(prevState, formData) {
     const userId = formData.get("userId");
     const creditAmount = formData.get("creditAmount");
+    const isPrivateUser = formData.get('isPrivateUser');
+
     if (!userId || typeof userId !== "string") {
         return { err: "Invalid user ID" };
     }
-    console.log("Received userId and credit amount", userId, creditAmount);
+
     const parsedCredit = Number(creditAmount);
     if (Number.isNaN(parsedCredit) || parsedCredit < 0) {
         return { err: "Invalid credit amount" };
@@ -37,6 +39,8 @@ export async function addUser(prevState, formData) {
         delete userData._id;
 
         userData.credit = parsedCredit;
+
+        userData.isPrivate = isPrivateUser;
 
         console.log("Creating new User with data:", userData);
 

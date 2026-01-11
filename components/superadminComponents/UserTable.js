@@ -10,8 +10,10 @@ import { Button } from "../ui/button"
 import Link from "next/link"
 import { Eye, FolderCog, Trash } from "lucide-react"
 import DeletePartnerForm from "../delete-partner-form"
+import MakeClientPrivateForm from "../make-client-private-form"
+import { Badge } from "../ui/badge"
 
-const UserTable = ({ users }) => {
+const UserTable = ({ currentUser, users }) => {
     return (
         <div className="overflow-x-auto w-full">
             <Table>
@@ -26,10 +28,18 @@ const UserTable = ({ users }) => {
                 <TableBody>
                     {users?.map((user) => (
                         <TableRow key={user?._id}>
-                            <TableCell className="font-medium">{user?.companyName}</TableCell>
+                            <TableCell className="flex items-center gap-2 font-medium">
+                                <span>{user?.companyName}</span>
+                                {(currentUser?.name === 'Muneeb Ur Rehman' || currentUser?.name === 'Nabeel Ahmad' || currentUser?.name === 'John Doe') && (
+                                    <Badge>{user?.isPrivate ? 'Private' : null}</Badge>
+                                )}
+                            </TableCell>
                             <TableCell className={'max-sm:hidden'}>{user?.name}</TableCell>
                             <TableCell className={'max-sm:hidden'}>{user?.email}</TableCell>
                             <TableCell className="max-md:text-right flex items-center justify-end gap-2">
+                                {(currentUser?.name === 'Muneeb Ur Rehman' || currentUser?.name === 'Nabeel Ahmad' || currentUser?.name === 'John Doe') && !user?.isPrivate && (
+                                    <MakeClientPrivateForm userName={user?.name} userId={user?._id} />
+                                )}
                                 <DeletePartnerForm userId={user?._id} />
                                 <Link href={`/admin/user/${user?._id}`}>
                                     <Button variant="secondary">

@@ -158,7 +158,7 @@ const Header = ({ userFromDB, pfpLink }) => {
 
                     {userFromDB?.credit > 0 && <div className="max-sm:hidden flex items-center gap-2 p-2 border border-primary">
                         <CircleDollarSign className="text-foreground" />
-                        <p className="text-foreground">${Number(userFromDB?.credit).toFixed(2)}</p>
+                        <p className="text-foreground">$ {Number(userFromDB?.credit).toFixed(2)}</p>
                     </div>}
                     {/* <div className="flex items-center">
                         {loading && <Loader size="h-4 w-4" />}

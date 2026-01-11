@@ -26,6 +26,7 @@ const PendingUserTable = ({ pendingUsers }) => {
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [checked, setChecked] = useState(false)
     const [creditStates, setCreditStates] = useState({});
+    const [isPrivateUser, setIsPrivateUser] = useState(false);
 
     const handleClick = (userId) => {
         setSelectedUserId(userId);
@@ -84,7 +85,18 @@ const PendingUserTable = ({ pendingUsers }) => {
                                                     <Label htmlFor="creditAmount">Credit Amount</Label>
                                                     <Input type="number" min="0" id="creditAmount" name="creditAmount" disabled={!creditStates[user?._id]?.checked} placeholder="Enter credit amount" />
                                                 </div>
+                                                <div className='grid gap-3'>
+                                                    <div className='flex items-center gap-3'>
+                                                        <Checkbox id="isPrivateUser"
+                                                            checked={isPrivateUser}
+                                                            onCheckedChange={(value) => setIsPrivateUser(value === true)}
+                                                        />
+                                                        <Label htmlFor="isPrivateUser">Private Client?</Label>
+                                                    </div>
+                                                </div>
                                             </div>
+
+                                            <input type="hidden" name="isPrivateUser" value={isPrivateUser ? "true" : "false"} />
                                             <input type="hidden" name='userId' value={user?._id} />
                                             <DialogFooter className={'mt-4'}>
                                                 <DialogClose asChild>

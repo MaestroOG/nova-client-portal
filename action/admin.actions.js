@@ -14,6 +14,7 @@ import { getYouTubeEmbedUrl } from "@/utils/formUtils";
 import { createTransporter } from "@/utils/transporterFns";
 import { hashPassword } from "@/utils/validatorFns";
 import { revalidatePath } from "next/cache";
+import { flightRouterStateSchema } from "next/dist/server/app-render/types";
 
 export async function createManager(prevState, formData) {
     const userId = formData.get('userId');
@@ -752,6 +753,50 @@ export async function AddTeammateToAgency(prevState, formData) {
         return {
             success: false,
             message: 'Something went wrong'
+        }
+    }
+}
+
+export async function changeUserIsPrivate(prevState, formData) {
+    const userId = formData.get('userId');
+
+    try {
+        await connectDB();
+
+        const isExistingUser = await User.findById(userId);
+
+        if (!isExistingUser) {
+            return {
+                success: false,
+                message: "User does not exist"
+            }
+        }
+
+        const privatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $set: { isPrivate: true } },
+            { new: true, runValidators: true }
+        );
+
+
+        if (!privatedUser) {
+            return {
+                success: false,
+                message: "Cannot private user"
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: "Made user privated"
+        }
+    } catch (error) {
+        console.error(error.message);
+        return {
+            success: false,
+            message: "Something went wrong"
         }
     }
 }
