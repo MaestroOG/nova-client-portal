@@ -120,6 +120,29 @@ export const formConfig = {
         { label: "Preferred Communication Channel (e.g., Email, WhatsApp, Slack)", name: "communicationChannel", type: "text" },
         { label: "Additional Notes", name: "additionalNotes", type: "textarea" }
     ],
+    nativeAndroidDevelopment: [
+        { label: "App Name or Project Title", name: "appName", type: "text", required: true },
+        { label: "App Type (e.g., E-commerce, Social, Booking, Utility)", name: "appType", type: "text", required: true },
+        { label: "Brief Description of the App", name: "appDescription", type: "textarea", required: true },
+        { label: "Target Android Version or Devices", name: "targetDevices", type: "text" },
+        { label: "Key Features Required", name: "keyFeatures", type: "textarea" },
+        { label: "Do you have UI/UX designs?", name: "hasDesigns", type: "text" },
+        { label: "Backend API Available? (Yes / No)", name: "hasBackend", type: "text" },
+        { label: "Play Store Deployment Required?", name: "playStore", type: "text" },
+        { label: "Expected Timeline", name: "timeline", type: "text" },
+        { label: "Additional Notes", name: "additionalNotes", type: "textarea" }
+    ],
+    kotlinMultiplatformDevelopment: [
+        { label: "Project Name", name: "projectName", type: "text", required: true },
+        { label: "Platforms Required (Android, iOS, Web, Desktop)", name: "platforms", type: "text", required: true },
+        { label: "Project Description", name: "projectDescription", type: "textarea", required: true },
+        { label: "Existing Codebase? (Yes / No)", name: "existingCodebase", type: "text" },
+        { label: "Shared Logic Requirements (e.g., Auth, API, Database)", name: "sharedLogic", type: "textarea" },
+        { label: "UI Approach (Native UI or Shared UI)", name: "uiApproach", type: "text" },
+        { label: "Backend API Ready?", name: "backendReady", type: "text" },
+        { label: "Target Release Date", name: "releaseDate", type: "text" },
+        { label: "Additional Notes", name: "additionalNotes", type: "textarea" }
+    ],
 
     customService: [
         {

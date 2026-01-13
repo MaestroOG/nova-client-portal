@@ -56,6 +56,16 @@ export const yourProjects = [
     },
     {
         id: Math.random(),
+        projectTitle: "Native Android Development",
+        desc: "End-to-end development of high-performance Android apps using Kotlin, focused on clean architecture, smooth UI, and seamless integration with backend services."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Kotlin Multiplatform Development",
+        desc: "Build and share business logic across Android, iOS, and web using Kotlin Multiplatform, reducing duplication while keeping each platform fully native."
+    },
+    {
+        id: Math.random(),
         projectTitle: "Custom Service",
         desc: "A fully flexible service offering expert, on-demand technical assistance for custom requirements"
     },
