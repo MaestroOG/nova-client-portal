@@ -282,13 +282,6 @@ export const auditFormConfig = {
         { label: "Training / Skills Assessment Needed?", name: "trainingAudit", type: "checkbox" }
     ],
 
-    // 'leadGeneration-ColdCallingAudit': [
-    //     { label: "Business Name", name: "businessName", type: "text", required: true },
-    //     { label: "Target Market / Industry", name: "targetIndustry", type: "text", required: true },
-    //     { label: "Current Call Scripts", name: "callScripts", type: "textarea" },
-    //     { label: "Process Efficiency Review Needed?", name: "processAudit", type: "checkbox" }
-    // ],
-
     managedWebSupportAudit: [
         { label: "Website URL (Add https:// in front of the url)", name: "websiteUrl", type: "url", required: true },
         { label: "Hosting Provider", name: "hostingProvider", type: "text" },
@@ -304,6 +297,22 @@ export const auditFormConfig = {
         { label: "Detailed Description", name: "details", type: "textarea", required: true },
         { label: "Priority Level (Low, Medium, High, Urgent)", name: "priorityLevel", type: "select", options: ["Low", "Medium", "High", "Urgent"] },
         { label: "Access Details (if applicable)", name: "accessDetails", type: "textarea" },
+        { label: "Additional Notes", name: "additionalNotes", type: "textarea" }
+    ],
+    nativeAndroidAudit: [
+        { label: "App Name or Project Title", name: "appName", type: "text", required: true },
+        { label: "Type of App (e.g., E-commerce, Social, Utility)", name: "appType", type: "text", required: true },
+        { label: "Detailed App Requirements", name: "details", type: "textarea", required: true },
+        { label: "Priority Level (Low, Medium, High, Urgent)", name: "priorityLevel", type: "select", options: ["Low", "Medium", "High", "Urgent"] },
+        { label: "Existing App or Source Code Access (if any)", name: "accessDetails", type: "textarea" },
+        { label: "Additional Notes", name: "additionalNotes", type: "textarea" }
+    ],
+    kotlinMultiplatformAudit: [
+        { label: "Project Name", name: "projectName", type: "text", required: true },
+        { label: "Target Platforms (Android, iOS, Web, Desktop)", name: "platforms", type: "text", required: true },
+        { label: "Detailed Project Requirements", name: "details", type: "textarea", required: true },
+        { label: "Priority Level (Low, Medium, High, Urgent)", name: "priorityLevel", type: "select", options: ["Low", "Medium", "High", "Urgent"] },
+        { label: "Existing Codebase or Repo Access (if any)", name: "accessDetails", type: "textarea" },
         { label: "Additional Notes", name: "additionalNotes", type: "textarea" }
     ]
 };
