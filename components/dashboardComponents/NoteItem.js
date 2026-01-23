@@ -68,7 +68,7 @@ const NoteItem = ({ note, isUnread, onMarkAsRead, user }) => {
                 </div>
                 {user?.role === 'superadmin' && <Popover>
                     <PopoverTrigger>
-                        <EllipsisVertical className='cursor-pointer' />
+                        <EllipsisVertical className='cursor-pointer dark:text-black' />
                     </PopoverTrigger>
                     <PopoverContent className={'flex flex-col gap-2'}>
                         <EditCommentForm note={note?.note} id={note?._id} />
@@ -77,9 +77,17 @@ const NoteItem = ({ note, isUnread, onMarkAsRead, user }) => {
                 </Popover>}
             </div>
 
-            <div className="font-montserrat md:max-w-5xl w-full text-base sm:text-lg ml-0 sm:ml-11 font-medium text-content **:text-detail wrap-break-word whitespace-pre-wrap [&_p]:my-1
-    [&_p]:leading-snug
-    [&_br]:leading-tight overflow-hidden"
+            <div className="font-montserrat
+    md:max-w-5xl w-full
+    text-sm sm:text-base
+    ml-0 sm:ml-11
+    font-medium text-content **:text-detail
+    wrap-break-word
+    whitespace-pre-wrap
+    [&_p]:my-0.5
+    [&_p]:leading-tight
+    [&_br]:leading-none
+    overflow-hidden"
             >
                 {parse(note?.note)}
             </div>
