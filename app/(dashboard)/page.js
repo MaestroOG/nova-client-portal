@@ -77,6 +77,8 @@ const HomePage = async ({ searchParams }) => {
   }
   const latestNotification = await getLatestUnreadNotification();
 
+  const visibleProjects = filterProjectsByUser(projects, user?.name);
+
   return (
     <>
 
@@ -111,7 +113,7 @@ const HomePage = async ({ searchParams }) => {
             </div>
           )}
           <Suspense fallback={<p>Loading...</p>}>
-            {projects?.map(project => (
+            {visibleProjects?.map(project => (
               <MainProjectCard key={project?._id} project={project} />
             ))}
           </Suspense>

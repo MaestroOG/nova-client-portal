@@ -41,3 +41,26 @@ export async function comparePassword(password, hashedPassword) {
     const isMatch = await bcrypt.compare(password, hashedPassword);
     return isMatch;
 }
+
+export function filterProjectsByUser(projects, userName) {
+    const restrictedProjects = [
+        "SharpTruck - Meta Ads",
+        "SharpTruck - PPC",
+    ];
+
+    const allowedUsers = [
+        "Nabeel Ahmad",
+        "Anthony Rome",
+        "Muneeb Ur Rehman",
+    ];
+
+    // If user is allowed, return all projects
+    if (allowedUsers.includes(userName)) {
+        return projects;
+    }
+
+    // Otherwise, filter out restricted projects
+    return projects.filter(
+        project => !restrictedProjects.includes(project.projectTitle)
+    );
+}
