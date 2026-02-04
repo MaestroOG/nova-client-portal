@@ -188,14 +188,14 @@ export const SignUpUser = async (formValues, prevState, formData) => {
 
     await transporter.sendMail({
       from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-      to: [email, 'portalnovaprotocols@gmail.com', 'team@novaprotocols.com'],
+      to: [email, 'portalnovaprotocols@gmail.com', 'nabeel@novaprotocols.com'],
       subject: "Thanks for your interest in partnering with Nova Protocols",
       html: userHtml,
     })
 
     await transporter.sendMail({
       from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-      to: ['portalnovaprotocols@gmail.com', 'team@novaprotocols.com'],
+      to: ['portalnovaprotocols@gmail.com', 'nabeel@novaprotocols.com'],
       subject: "New User Application – Review Required",
       html,
     })

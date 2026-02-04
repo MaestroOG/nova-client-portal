@@ -737,7 +737,7 @@ export async function AddTeammateToAgency(prevState, formData) {
 
         await transporter.sendMail({
             from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-            to: ['portalnovaprotocols@gmail.com', email, 'team@novaprotocols.com'],
+            to: ['portalnovaprotocols@gmail.com', email, 'nabeel@novaprotocols.com'],
             subject: "You’ve been added to the team",
             html,
         })

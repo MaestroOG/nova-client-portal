@@ -67,7 +67,7 @@ export async function createTask(selectedUsers, prevState, formData) {
             const assigneeUser = await User.findById(selectedUser);
             await transporter.sendMail({
                 from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-                to: ['portalnovaprotocols@gmail.com', assigneeUser?.email, 'team@novaprotocols.com'],
+                to: ['portalnovaprotocols@gmail.com', assigneeUser?.email, 'nabeel@novaprotocols.com'],
                 subject: "New Task Assigned",
                 html,
             })
@@ -267,7 +267,7 @@ export async function createTaskComment(prevState, formData) {
             const html = generateTaskCommentNotification(assigneetoSendEmail?.name, taskExists?.title, `https://partner.novaprotocols.com/${taskExists?._id}`, taskComment?.createdAt)
             await transporter.sendMail({
                 from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-                to: ['portalnovaprotocols@gmail.com', assigneetoSendEmail?.email, 'team@novaprotocols.com'],
+                to: ['portalnovaprotocols@gmail.com', assigneetoSendEmail?.email, 'nabeel@novaprotocols.com'],
                 subject: "New Comment On Task",
                 html,
             })
