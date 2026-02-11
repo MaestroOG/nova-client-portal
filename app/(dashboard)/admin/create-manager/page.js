@@ -1,12 +1,12 @@
 import CreateManagerForm from "@/components/create-manager-form"
 import Container from "@/components/dashboardComponents/Container"
-import { getAllSimpleUsers } from "@/lib/admin"
+import { getNovaUsers } from "@/lib/admin"
 import { getUser } from "@/lib/user"
 import { redirect } from "next/navigation"
 
 const CreateManagerPage = async () => {
     const user = await getUser();
-    const users = await getAllSimpleUsers();
+    const users = await getNovaUsers();
 
     if (user?.role !== 'superadmin') {
         redirect('/');
