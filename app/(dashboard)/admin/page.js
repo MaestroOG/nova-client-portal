@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { getAllDeletedUsers, getAllPendingUsers, getAllUsers } from '@/lib/admin'
 import { getUser } from '@/lib/user';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export const metadata = {
     title: "SuperAdmin Panel - Nova Protocols Client Portal"
@@ -17,6 +18,10 @@ const SuperAdminPage = async () => {
     const pendingUsers = await getAllPendingUsers();
     const allUsers = await getAllUsers();
     const deletedUser = await getAllDeletedUsers();
+
+    if (user?.role !== 'superadmin') {
+        redirect('/');
+    }
 
     return (
         <main className='h-screen'>
