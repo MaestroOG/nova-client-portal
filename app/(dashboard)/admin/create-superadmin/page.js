@@ -1,9 +1,16 @@
 import CreateSuperAdminForm from '@/components/create-superadmin-form'
 import Container from '@/components/dashboardComponents/Container'
 import { getAllSimpleUsers } from '@/lib/admin'
+import { getUser } from '@/lib/user'
+import { redirect } from 'next/navigation'
 
 const CreateSuperAdminPage = async () => {
+    const user = await getUser();
     const allUsers = await getAllSimpleUsers();
+
+    if (user?.role !== 'superadmin') {
+        redirect('/');
+    }
 
     if (!allUsers || allUsers.length === 0) {
         return (

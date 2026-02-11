@@ -1,11 +1,18 @@
 import Container from '@/components/dashboardComponents/Container';
 import MainProjectCard from '@/components/dashboardComponents/MainProjectCard';
 import { getAllUserProjects } from '@/lib/projects';
+import { getUser } from '@/lib/user';
+import { redirect } from 'next/navigation';
 
 const AgencyProjects = async ({ searchParams }) => {
+    const user = await getUser();
     const { agencyId } = await searchParams;
     const projects = await getAllUserProjects(agencyId)
-    console.log(projects)
+
+    if (user?.role !== 'superadmin') {
+        redirect('/');
+    }
+
     return (
         <>
             <Container className={'bg-white px-4 py-3'}>

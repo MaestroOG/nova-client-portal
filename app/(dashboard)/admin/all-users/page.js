@@ -2,8 +2,16 @@ import Container from '@/components/dashboardComponents/Container'
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { getAllAgenciesWithUsers } from '@/lib/admin'
+import { getUser } from '@/lib/user';
+import { redirect } from 'next/navigation';
 
 const AllUsersPage = async () => {
+
+    const user = await getUser();
+
+    if (user?.role !== 'superadmin') {
+        redirect('/');
+    }
 
     const agencies = await getAllAgenciesWithUsers();
     return (

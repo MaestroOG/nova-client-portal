@@ -1,10 +1,17 @@
 import AddTeammateToAgencyForm from '@/components/add-teammate-to-agency-form'
 import Container from '@/components/dashboardComponents/Container'
 import { getAllCompanyNames } from '@/lib/admin';
+import { getUser } from '@/lib/user';
+import { redirect } from 'next/navigation';
 import React from 'react'
 
 const AddTeammatePage = async () => {
+    const user = await getUser();
     const companies = await getAllCompanyNames();
+
+    if (user?.role !== 'superadmin') {
+        redirect('/');
+    }
 
     return (
         <Container className="bg-white px-2 md:px-4 py-3 shadow-sm overflow-hidden">

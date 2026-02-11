@@ -2,10 +2,17 @@ import AssignCreditForm from '@/components/assign-credit-form'
 import Container from '@/components/dashboardComponents/Container'
 import { Button } from '@/components/ui/button';
 import { getAllUsers } from '@/lib/admin'
+import { getUser } from '@/lib/user';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 const AssignCreditPage = async () => {
     const users = await getAllUsers();
+    const user = await getUser();
+
+    if (user?.role !== 'superadmin') {
+        redirect('/');
+    }
     return (
         <>
             <Container className="bg-white px-2 md:px-4 py-3 flex flex-wrap items-center gap-2">
