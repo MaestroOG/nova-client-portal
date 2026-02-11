@@ -9,7 +9,7 @@ import { getAllArchivedProjects, getAllArchivedProjectsCount, getAllCompletedPro
 import { Suspense } from "react"
 import HomePageDialog from "@/components/dashboardComponents/HomePageDialog"
 import { getLatestUnreadNotification } from "@/lib/notifications"
-import { getAllAgencyArchivedProjectsCount, getAllAgencyProjects, getAllCompletedAgencyProjects, getAllCompletedProjectsThisMonth, getAllPendingAgencyProjects, getAllPendingProjectsThisMonth, getAllProjects, getAllRunningAgencyProjects, getAllRunningProjectsThisMonth } from "@/lib/admin"
+import { getAllAgencyArchivedProjectsCount, getAllAgencyProjects, getAllCompletedAgencyProjects, getAllCompletedProjectsThisMonth, getAllManagerProjects, getAllPendingAgencyProjects, getAllPendingProjectsThisMonth, getAllProjects, getAllRunningAgencyProjects, getAllRunningProjectsThisMonth } from "@/lib/admin"
 import ProjectCardsGrid from "@/components/dashboardComponents/ProjectCardsGrid"
 import MainProjectCard from "@/components/dashboardComponents/MainProjectCard"
 
@@ -49,6 +49,8 @@ const HomePage = async ({ searchParams }) => {
     pendingProjectsThisMonth = await getPendingProjectsThisMonth();
     runningProjectsThisMonth = await getRunningProjectsThisMonth();
     archivedProjects = await getArchivedProjectsCount();
+  } else if (user?.role === 'manager') {
+    projects = await getAllManagerProjects(user?._id);
   } else if (user?.role === 'team-member') {
     projects = await getAllAgencyProjects(user?.companyName, user?._id);
     completedProjectsThisMonth = await getAllCompletedAgencyProjects(user?.companyName);
