@@ -21,6 +21,7 @@ export async function createProject(prevState, formData) {
     const entries = {};
     const partnerId = formData.get("partnerId");
     const amount = Number(packageSelected.replace(/[^0-9.]/g, '').replace(/,/g, ''));
+    const HARDCODED_ASSIGNEES = ['691ec3c7df1acdc136893bf8', '6922f91c5bbffdf98d6e4929'];
 
     // Turn formData into a plain object
     formData.forEach((value, key) => {
@@ -45,29 +46,10 @@ export async function createProject(prevState, formData) {
         if (user?.role === 'superadmin') {
             const projectForUser = await User.findById(partnerId);
 
-            const userBalance = projectForUser?.credit || 0;
-
-            // if (userBalance < amount) {
-            //     return {
-            //         success: false,
-            //         message: "Insufficient credit balance. Please top up the user's account.",
-            //     }
-            // }
-
-            const expenditure = await addExpenditure(partnerId, amount);
-
-            // const updatedUser = await User.findByIdAndUpdate(
-            //     partnerId,
-            //     { $set: { credit: userBalance - amount } },
-            //     { new: true } // ✅ returns the updated user
-            // );
-
-            // if (!updatedUser) {
-            //     return {
-            //         success: false,
-            //         message: "Failed to deduct credit from user.",
-            //     }
-            // }
+            const assignees = [
+                projectForUser?._id,
+                ...HARDCODED_ASSIGNEES,
+            ].filter(Boolean);
 
             const project = await Project.create({
                 projectTitle,
@@ -76,7 +58,8 @@ export async function createProject(prevState, formData) {
                 status: 'pending',
                 createdBy: projectForUser?._id,
                 packageSelected,
-                byAdmin: true
+                byAdmin: true,
+                assignees,
             })
 
             const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected, `https://partner.novaprotocols.com/projects/${project?._id}`);
@@ -95,29 +78,11 @@ export async function createProject(prevState, formData) {
 
             const userFromDB = await User.findById(user?._id);
 
-            const userBalance = userFromDB?.credit || 0;
-
-            // if (userBalance < amount) {
-            //     return {
-            //         success: false,
-            //         message: "Insufficient credit balance. Please top up your account.",
-            //     }
-            // }
-
-            const expenditure = await addExpenditure(partnerId, amount);
-
-            // const updatedUser = await User.findByIdAndUpdate(
-            //     partnerId,
-            //     { $set: { credit: userBalance - amount } },
-            //     { new: true } // ✅ returns the updated user
-            // );
-
-            // if (!updatedUser) {
-            //     return {
-            //         success: false,
-            //         message: "Failed to deduct credit from user.",
-            //     }
-            // }
+            const assignees = [
+                user?._id,
+                userFromDB?.partnerId ?? null,
+                ...HARDCODED_ASSIGNEES,
+            ].filter(Boolean);
 
             const project = await Project.create({
                 projectTitle,
@@ -125,7 +90,8 @@ export async function createProject(prevState, formData) {
                 fields: cleanedEntries,
                 status: 'pending',
                 createdBy: user?._id,
-                packageSelected
+                packageSelected,
+                assignees,
             })
 
 
@@ -428,4 +394,35 @@ export async function editComment(prevState, formData) {
             message: "Something went wrong"
         }
     }
+}
+
+export async function assignProject(prevState, formData) {
+
+    const projectId = formData.get("projectId")?.trim();
+    const assignedUserId = formData.get("selectedUser")?.trim();
+
+    try {
+        await connectDB();
+
+        const project = await Project.findById(projectId);
+        if (!project) return { success: false, message: "Project not found." };
+
+        const alreadyAssigned = project.assignees.some(
+            (id) => id.toString() === assignedUserId
+        );
+
+        if (alreadyAssigned) {
+            return { success: false, message: "User is already assigned to this project." };
+        }
+
+        project.assignees.push(assignedUserId);
+        await project.save();
+
+        revalidatePath('/', 'layout');
+
+        return { success: true, message: "User assigned successfully." };
+    } catch (error) {
+        return { success: false, message: "Failed to assign user." };
+    }
+
 }

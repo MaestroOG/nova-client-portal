@@ -8,6 +8,7 @@ const projectSchema = new Schema({
     createdBy: { type: Schema.Types.ObjectId, required: true, ref: "User" }, // user ID of the creator
     packageSelected: { type: String, required: true },
     byAdmin: { type: Boolean, default: false },
+    assignees: [{ type: Schema.Types.ObjectId, ref: "User" }],
 }, { timestamps: true });
 
 const Project = models.Project || model('Project', projectSchema);

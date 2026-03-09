@@ -1,7 +1,7 @@
 import Container from '@/components/dashboardComponents/Container'
 import ProjectStatusForms from '@/components/project-status-forms'
 import NoteBox from '@/components/superadminComponents/NoteBox'
-import { getNotesByProjectId, getProjectById } from '@/lib/projects'
+import { getAssignableUsers, getNotesByProjectId, getProjectById } from '@/lib/projects'
 import { getUser } from '@/lib/user'
 import { camelToNormal, capitalizeFirst } from '@/utils/formUtils'
 import ProjectNotesList from '@/components/ProjectNotesList'
@@ -11,6 +11,7 @@ import ArchiveProjectForm from '@/components/archive-project-form'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import AssignProjectForm from '@/components/assign-project-form'
 
 
 export const metadata = {
@@ -25,6 +26,7 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
     const service = camelToNormal(projectDetails?.service);
     const status = capitalizeFirst(projectDetails?.status);
     const notesData = await getNotesByProjectId(id, 1, 10);
+    const assignableUsers = await getAssignableUsers();
     const notes = notesData?.notes || [];
 
     const isUnread = user ? notes?.some(note => !(note?.readBy ?? []).includes(user._id)) : false;
@@ -42,7 +44,6 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
     if (!projectDetails) {
         notFound();
     }
-
     return (
         <>
             <Container className={'bg-white max-sm:max-w-[430px] p-4 overflow-x-hidden'}>
@@ -65,6 +66,7 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                         <p className='text-red font-medium animate-pulse whitespace-nowrap'>• {status}</p>
                         {user?.role === 'superadmin' && <ProjectStatusForms status={status} projectId={id} />}
                         {user?.role === 'superadmin' && <ArchiveProjectForm projectId={id} />}
+                        {(user?.name === 'John Doe' || user?.name === 'Muneeb Ur Rehman' || user?.name === 'Nabeel Ahmad') && <AssignProjectForm assignableUsers={assignableUsers} projectId={id} />}
                     </div>
                 </div>
 
