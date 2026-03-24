@@ -128,7 +128,7 @@ export const generateTaskNotification = (task_title, task_description, due_date,
       </p>
     </div>
     <div class="footer">
-      © 2025 Nova Protocols — This is an automated message.
+      © ${new Date().getFullYear()} Nova Protocols — This is an automated message.
     </div>
   </div>
 </body>
@@ -221,7 +221,7 @@ export const generateTaskCommentNotification = (user_name, task_title, task_url,
     </div>
 
     <div class="footer">
-      © 2025 Nova Protocols — You’re receiving this because you’re assigned to the task.
+      © ${new Date().getFullYear()} Nova Protocols — You’re receiving this because you’re assigned to the task.
     </div>
   </div>
 </body>
