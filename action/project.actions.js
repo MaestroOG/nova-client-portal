@@ -1,6 +1,10 @@
-'use server';
+"use server";
 
-import { generateAdminToUserEmailNoteTemplate, generateNoteCreatedEmailUserTemplate, generateProjectCreatedEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
+import {
+  generateAdminToUserEmailNoteTemplate,
+  generateNoteCreatedEmailUserTemplate,
+  generateProjectCreatedEmailTemplate,
+} from "@/htmlemailtemplates/emailTemplates";
 import { generateProjectStatusUpdateEmail } from "@/htmlemailtemplates/projectStatusTemplates";
 import { addExpenditure } from "@/lib/admin";
 import { connectDB } from "@/lib/mongodb";
@@ -9,420 +13,497 @@ import Expenditure from "@/models/Expenditure";
 import Note from "@/models/Note";
 import Project from "@/models/Project";
 import User from "@/models/User";
-import { cleanFormEntries, formatDateToYMD, validateEntries } from "@/utils/formUtils";
+import {
+  cleanFormEntries,
+  formatDateToYMD,
+  validateEntries,
+} from "@/utils/formUtils";
 import { createTransporter } from "@/utils/transporterFns";
 import { revalidatePath } from "next/cache";
 
 export async function createProject(prevState, formData) {
-    const user = await getUser();
-    const service = formData.get("service");
-    const projectTitle = formData.get("projectTitle");
-    const packageSelected = formData.get("selectedPackage")
-    const entries = {};
-    const partnerId = formData.get("partnerId");
-    const amount = Number(packageSelected.replace(/[^0-9.]/g, '').replace(/,/g, ''));
-    const HARDCODED_ASSIGNEES = ['691ec3c7df1acdc136893bf8', '6922f91c5bbffdf98d6e4929'];
+  const user = await getUser();
+  const service = formData.get("service");
+  const projectTitle = formData.get("projectTitle");
+  const packageSelected = formData.get("selectedPackage");
+  const entries = {};
+  const partnerId = formData.get("partnerId");
+  const amount = Number(
+    packageSelected.replace(/[^0-9.]/g, "").replace(/,/g, ""),
+  );
+  const HARDCODED_ASSIGNEES = [
+    "691ec3c7df1acdc136893bf8",
+    "6922f91c5bbffdf98d6e4929",
+  ];
 
-    // Turn formData into a plain object
-    formData.forEach((value, key) => {
-        if (key !== "service") {
-            entries[key] = value;
-        }
-    });
+  // Turn formData into a plain object
+  formData.forEach((value, key) => {
+    if (key !== "service") {
+      entries[key] = value;
+    }
+  });
 
-    const cleanedEntries = cleanFormEntries(entries);
+  const cleanedEntries = cleanFormEntries(entries);
 
-    if (!cleanedEntries || !validateEntries(cleanedEntries)) {
-        return {
-            success: false,
-            message: "Project not created.",
-        }
+  if (!cleanedEntries || !validateEntries(cleanedEntries)) {
+    return {
+      success: false,
+      message: "Project not created.",
+    };
+  }
+
+  try {
+    await connectDB();
+
+    if (user?.role === "superadmin") {
+      const projectForUser = await User.findById(partnerId);
+
+      const assignees = [projectForUser?._id, ...HARDCODED_ASSIGNEES].filter(
+        Boolean,
+      );
+
+      const project = await Project.create({
+        projectTitle,
+        service,
+        fields: cleanedEntries,
+        status: "pending",
+        createdBy: projectForUser?._id,
+        packageSelected,
+        byAdmin: true,
+        assignees,
+      });
+
+      const html = generateProjectCreatedEmailTemplate(
+        projectForUser?.companyName,
+        projectTitle,
+        service,
+        packageSelected,
+        `https://partner.novaprotocols.com/projects/${project?._id}`,
+      );
+
+      const transporter = createTransporter();
+
+      await transporter.sendMail({
+        from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+        to: [
+          projectForUser?.email,
+          "portalnovaprotocols@gmail.com",
+          "nabeel@novaprotocols.com",
+        ],
+        subject: "Project Created - Nova Protocols",
+        html,
+      });
     }
 
-    try {
-        await connectDB();
+    if (user?.role === "user" || user?.role === "team-member") {
+      const userFromDB = await User.findById(user?._id);
 
+      const assignees = [
+        user?._id,
+        userFromDB?.partnerId ?? null,
+        ...HARDCODED_ASSIGNEES,
+      ].filter(Boolean);
 
-        if (user?.role === 'superadmin') {
-            const projectForUser = await User.findById(partnerId);
+      const project = await Project.create({
+        projectTitle,
+        service,
+        fields: cleanedEntries,
+        status: "pending",
+        createdBy: user?._id,
+        packageSelected,
+        assignees,
+      });
 
-            const assignees = [
-                projectForUser?._id,
-                ...HARDCODED_ASSIGNEES,
-            ].filter(Boolean);
+      const html = generateProjectCreatedEmailTemplate(
+        user?.companyName,
+        projectTitle,
+        service,
+        packageSelected,
+        `https://partner.novaprotocols.com/projects/${project?._id}`,
+      );
 
-            const project = await Project.create({
-                projectTitle,
-                service,
-                fields: cleanedEntries,
-                status: 'pending',
-                createdBy: projectForUser?._id,
-                packageSelected,
-                byAdmin: true,
-                assignees,
-            })
-
-            const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected, `https://partner.novaprotocols.com/projects/${project?._id}`);
-
-            const transporter = createTransporter();
-
-            await transporter.sendMail({
-                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-                to: [projectForUser?.email, 'portalnovaprotocols@gmail.com', 'nabeel@novaprotocols.com'],
-                subject: "Project Created - Nova Protocols",
-                html,
-            })
-        }
-
-        if (user?.role === 'user' || user?.role === 'team-member') {
-
-            const userFromDB = await User.findById(user?._id);
-
-            const assignees = [
-                user?._id,
-                userFromDB?.partnerId ?? null,
-                ...HARDCODED_ASSIGNEES,
-            ].filter(Boolean);
-
-            const project = await Project.create({
-                projectTitle,
-                service,
-                fields: cleanedEntries,
-                status: 'pending',
-                createdBy: user?._id,
-                packageSelected,
-                assignees,
-            })
-
-
-            const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected, `https://partner.novaprotocols.com/projects/${project?._id}`);
-
-            const transporter = createTransporter();
-
-            await transporter.sendMail({
-                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-                to: [user?.email, 'portalnovaprotocols@gmail.com', 'nabeel@novaprotocols.com'],
-                subject: "Project Created - Nova Protocols",
-                html,
-            })
-        }
-
-        return {
-            success: true,
-            message: "Project created successfully",
-        }
-    } catch (error) {
-        return {
-            success: false,
-            message: "Failed to create project."
-        }
+      try {
+        const transporter = createTransporter();
+        await transporter.sendMail({
+          from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+          to: user.email,
+          subject: "Project Created - Nova Protocols",
+          html,
+        });
+      } catch (emailError) {
+        console.error("Project created, but email failed:", emailError);
+      }
     }
+
+    return {
+      success: true,
+      message: "Project created successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        error instanceof Error ? error.message : "Failed to create project.",
+    };
+  }
 }
-
 
 export async function addNote(id, prevState, formData) {
-    const user = await getUser();
-    const commentText = formData.get('commentText');
+  const user = await getUser();
+  const commentText = formData.get("commentText");
 
-
-    try {
-        await connectDB();
-        const project = await Project.findById(id).populate("createdBy");
-        await Note.create({
-            note: commentText,
-            createdBy: user?._id,
-            projectId: id,
-        })
-
-        revalidatePath('/', "layout")
-
-        const transporter = createTransporter();
-
-        const html = generateNoteCreatedEmailUserTemplate(`https://partner.novaprotocols.com/projects/${project?._id}`, user?.name, project?.projectTitle);
-
-        if (user?.role === 'user') {
-            await transporter.sendMail({
-                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-                to: ['portalnovaprotocols@gmail.com', 'nabeel@novaprotocols.com'],
-                subject: "Note Created - Nova Protocols",
-                html,
-            })
-        }
-
-        if (user?.role === 'superadmin') {
-            const date = formatDateToYMD(project?.createdAt)
-            const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date, `https://partner.novaprotocols.com/projects/${project?._id}`);
-            await transporter.sendMail({
-                from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-                to: [project?.createdBy.email, 'portalnovaprotocols@gmail.com', 'nabeel@novaprotocols.com'],
-                subject: "Note Created - Nova Protocols",
-                html: adminToUserHtml,
-            })
-        }
-
-        return {
-            success: true,
-            message: "Comment added successfully",
-        }
-    } catch (error) {
-        return {
-            success: false,
-            message: "Failed to add comment"
-        }
-    }
-}
-
-
-export async function ApproveProject(projectId, prevState, formData) {
-    const user = await getUser();
+  try {
     await connectDB();
-    const updatedProject = await Project.findByIdAndUpdate(
-        projectId,
-        { $set: { status: 'in-progress' } },
-        { new: true, runValidators: true }
-    );
+    const project = await Project.findById(id).populate("createdBy");
+    await Note.create({
+      note: commentText,
+      createdBy: user?._id,
+      projectId: id,
+    });
 
-    revalidatePath('/', "layout");
-
-    const project = await Project.findById(projectId).populate('createdBy');
-
-
-    const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'in-progress', project?.createdBy.name, project?.updatedAt);
+    revalidatePath("/", "layout");
 
     const transporter = createTransporter();
 
-    await transporter.sendMail({
+    const html = generateNoteCreatedEmailUserTemplate(
+      `https://partner.novaprotocols.com/projects/${project?._id}`,
+      user?.name,
+      project?.projectTitle,
+    );
+
+    if (user?.role === "user") {
+      await transporter.sendMail({
         from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-        to: [project?.createdBy.email, 'portalnovaprotocols@gmail.com', 'nabeel@novaprotocols.com'],
-        subject: "Project Status Update - Nova Protocols",
+        to: ["portalnovaprotocols@gmail.com", "nabeel@novaprotocols.com"],
+        subject: "Note Created - Nova Protocols",
         html,
-    })
+      });
+    }
+
+    if (user?.role === "superadmin") {
+      const date = formatDateToYMD(project?.createdAt);
+      const adminToUserHtml = generateAdminToUserEmailNoteTemplate(
+        project?.projectTitle,
+        project?.createdBy?.name,
+        date,
+        `https://partner.novaprotocols.com/projects/${project?._id}`,
+      );
+      await transporter.sendMail({
+        from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+        to: [
+          project?.createdBy.email,
+          "portalnovaprotocols@gmail.com",
+          "nabeel@novaprotocols.com",
+        ],
+        subject: "Note Created - Nova Protocols",
+        html: adminToUserHtml,
+      });
+    }
 
     return {
-        success: true,
-        message: "Project approved successfully",
-    }
+      success: true,
+      message: "Comment added successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to add comment",
+    };
+  }
+}
+
+export async function ApproveProject(projectId, prevState, formData) {
+  const user = await getUser();
+  await connectDB();
+  const updatedProject = await Project.findByIdAndUpdate(
+    projectId,
+    { $set: { status: "in-progress" } },
+    { new: true, runValidators: true },
+  );
+
+  revalidatePath("/", "layout");
+
+  const project = await Project.findById(projectId).populate("createdBy");
+
+  const html = generateProjectStatusUpdateEmail(
+    project?.projectTitle,
+    "in-progress",
+    project?.createdBy.name,
+    project?.updatedAt,
+  );
+
+  const transporter = createTransporter();
+
+  await transporter.sendMail({
+    from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+    to: [
+      project?.createdBy.email,
+      "portalnovaprotocols@gmail.com",
+      "nabeel@novaprotocols.com",
+    ],
+    subject: "Project Status Update - Nova Protocols",
+    html,
+  });
+
+  return {
+    success: true,
+    message: "Project approved successfully",
+  };
 }
 
 export async function RejectProject(projectId, prevState, formData) {
-    const user = await getUser();
-    try {
-        await connectDB();
-        await Project.findByIdAndUpdate(projectId, { status: 'rejected' });
-        revalidatePath('/', "layout");
-
-        const project = await Project.findById(projectId).populate('createdBy');
-
-        const amount = Number(project?.packageSelected.replace(/[^0-9.]/g, '').replace(/,/g, ''));
-
-        const updatedUser = await User.findByIdAndUpdate(project?.createdBy, { $inc: { credit: amount } }, { new: true });
-
-        const expenditure = await addExpenditure(project?.createdBy, -amount);
-
-        if (!updatedUser) {
-            return {
-                success: false,
-                message: "Failed to refund credit to user.",
-            }
-        }
-
-
-        const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'cancelled', project?.createdBy.name, project?.updatedAt);
-
-        const transporter = createTransporter();
-
-        await transporter.sendMail({
-            from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-            to: [user?.email, 'portalnovaprotocols@gmail.com', 'nabeel@novaprotocols.com'],
-            subject: "Project Status Update - Nova Protocols",
-            html,
-        })
-
-        return {
-            success: true,
-            message: "Project rejected successfully and credit refunded.",
-        }
-    } catch (error) {
-        return {
-            success: false,
-            message: "Something went wrong.",
-        }
-    }
-}
-
-
-export async function changeProjectStatus(projectId, prevState, formData) {
-    const status = formData.get("status")?.trim();
-    const user = await getUser();
+  const user = await getUser();
+  try {
     await connectDB();
+    await Project.findByIdAndUpdate(projectId, { status: "rejected" });
+    revalidatePath("/", "layout");
 
-    await Project.findByIdAndUpdate(projectId, { status: status });
-    revalidatePath('/', "layout");
+    const project = await Project.findById(projectId).populate("createdBy");
 
-    const project = await Project.findById(projectId).populate('createdBy');
+    const amount = Number(
+      project?.packageSelected.replace(/[^0-9.]/g, "").replace(/,/g, ""),
+    );
 
-    const html = generateProjectStatusUpdateEmail(project?.projectTitle, status, project?.createdBy.name, project?.updatedAt);
+    const updatedUser = await User.findByIdAndUpdate(
+      project?.createdBy,
+      { $inc: { credit: amount } },
+      { new: true },
+    );
+
+    const expenditure = await addExpenditure(project?.createdBy, -amount);
+
+    if (!updatedUser) {
+      return {
+        success: false,
+        message: "Failed to refund credit to user.",
+      };
+    }
+
+    const html = generateProjectStatusUpdateEmail(
+      project?.projectTitle,
+      "cancelled",
+      project?.createdBy.name,
+      project?.updatedAt,
+    );
 
     const transporter = createTransporter();
 
     await transporter.sendMail({
-        from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
-        to: ["portalnovaprotocols@gmail.com", user?.email, 'nabeel@novaprotocols.com'],
-        subject: "Project Status Update - Nova Protocols",
-        html,
-    })
+      from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+      to: [
+        user?.email,
+        "portalnovaprotocols@gmail.com",
+        "nabeel@novaprotocols.com",
+      ],
+      subject: "Project Status Update - Nova Protocols",
+      html,
+    });
 
     return {
-        success: true,
-        message: "Project status updated successfully",
-    }
+      success: true,
+      message: "Project rejected successfully and credit refunded.",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong.",
+    };
+  }
+}
+
+export async function changeProjectStatus(projectId, prevState, formData) {
+  const status = formData.get("status")?.trim();
+  const user = await getUser();
+  await connectDB();
+
+  await Project.findByIdAndUpdate(projectId, { status: status });
+  revalidatePath("/", "layout");
+
+  const project = await Project.findById(projectId).populate("createdBy");
+
+  const html = generateProjectStatusUpdateEmail(
+    project?.projectTitle,
+    status,
+    project?.createdBy.name,
+    project?.updatedAt,
+  );
+
+  const transporter = createTransporter();
+
+  await transporter.sendMail({
+    from: '"Nova Protocols" <portalnovaprotocols@gmail.com>',
+    to: [
+      "portalnovaprotocols@gmail.com",
+      user?.email,
+      "nabeel@novaprotocols.com",
+    ],
+    subject: "Project Status Update - Nova Protocols",
+    html,
+  });
+
+  return {
+    success: true,
+    message: "Project status updated successfully",
+  };
 }
 
 export async function archiveProject(prevState, formData) {
-    const projectId = formData.get("projectId")?.trim();
+  const projectId = formData.get("projectId")?.trim();
 
-    try {
-        await connectDB();
-        const updatedProject = await Project.findByIdAndUpdate(projectId, { status: 'archived' }, { new: true });
-        if (!updatedProject) {
-            return {
-                success: false,
-                message: "Failed to archive project.",
-            }
-        }
-
-        revalidatePath('/', 'layout');
-
-        return {
-            success: true,
-            message: 'Project archived successfully.'
-        }
-    } catch (error) {
-        console.error("Error archiving project:", error);
-        return {
-            success: false,
-            message: "Something went wrong.",
-        }
+  try {
+    await connectDB();
+    const updatedProject = await Project.findByIdAndUpdate(
+      projectId,
+      { status: "archived" },
+      { new: true },
+    );
+    if (!updatedProject) {
+      return {
+        success: false,
+        message: "Failed to archive project.",
+      };
     }
+
+    revalidatePath("/", "layout");
+
+    return {
+      success: true,
+      message: "Project archived successfully.",
+    };
+  } catch (error) {
+    console.error("Error archiving project:", error);
+    return {
+      success: false,
+      message: "Something went wrong.",
+    };
+  }
 }
 
 export async function deleteComment(prevState, formData) {
-    const user = await getUser();
-    const commentId = formData.get('commentId');
+  const user = await getUser();
+  const commentId = formData.get("commentId");
 
-    if (!commentId) {
-        return {
-            success: false,
-            message: "Comment needs to exist"
-        }
+  if (!commentId) {
+    return {
+      success: false,
+      message: "Comment needs to exist",
+    };
+  }
+
+  try {
+    await connectDB();
+
+    const comment = await Note.findById(commentId);
+
+    if (!comment) {
+      return {
+        success: false,
+        message: "Comment not found",
+      };
     }
 
-    try {
-        await connectDB();
-
-        const comment = await Note.findById(commentId);
-
-        if (!comment) {
-            return {
-                success: false,
-                message: "Comment not found"
-            }
-        }
-
-        if (comment.createdBy.toString() !== user?._id?.toString() && user?.role !== 'superadmin') {
-            return {
-                success: false,
-                message: "Unauthorized to delete this comment"
-            }
-        }
-
-        const deletedComment = await Note.findByIdAndDelete(commentId);
-
-        if (!deletedComment) {
-            return {
-                success: false,
-                message: "Could not delete comment"
-            }
-        }
-
-        revalidatePath('/', 'layout');
-
-        return {
-            success: true,
-            message: "Comment deleted successfully"
-        }
-    } catch (error) {
-        return {
-            success: false,
-            message: "Something went wrong"
-        }
+    if (
+      comment.createdBy.toString() !== user?._id?.toString() &&
+      user?.role !== "superadmin"
+    ) {
+      return {
+        success: false,
+        message: "Unauthorized to delete this comment",
+      };
     }
+
+    const deletedComment = await Note.findByIdAndDelete(commentId);
+
+    if (!deletedComment) {
+      return {
+        success: false,
+        message: "Could not delete comment",
+      };
+    }
+
+    revalidatePath("/", "layout");
+
+    return {
+      success: true,
+      message: "Comment deleted successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
 }
 
 export async function editComment(prevState, formData) {
-    const note = formData.get('commentText');
-    const noteId = formData.get('commentId');
+  const note = formData.get("commentText");
+  const noteId = formData.get("commentId");
 
-    try {
-        await connectDB();
+  try {
+    await connectDB();
 
-        const updates = {};
+    const updates = {};
 
-        if (note) {
-            updates.note = note;
-        }
-
-        const updatedNote = await Note.findByIdAndUpdate(noteId, { $set: updates }, { new: true });
-
-        if (!updatedNote) {
-            return {
-                success: false,
-                message: "Could not update comment"
-            }
-        }
-
-        revalidatePath('/', 'layout');
-
-        return {
-            success: true,
-            message: "Update successfully"
-        }
-    } catch (error) {
-        console.log(error);
-        return {
-            success: false,
-            message: "Something went wrong"
-        }
+    if (note) {
+      updates.note = note;
     }
+
+    const updatedNote = await Note.findByIdAndUpdate(
+      noteId,
+      { $set: updates },
+      { new: true },
+    );
+
+    if (!updatedNote) {
+      return {
+        success: false,
+        message: "Could not update comment",
+      };
+    }
+
+    revalidatePath("/", "layout");
+
+    return {
+      success: true,
+      message: "Update successfully",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
 }
 
 export async function assignProject(prevState, formData) {
+  const projectId = formData.get("projectId")?.trim();
+  const assignedUserId = formData.get("selectedUser")?.trim();
 
-    const projectId = formData.get("projectId")?.trim();
-    const assignedUserId = formData.get("selectedUser")?.trim();
+  try {
+    await connectDB();
 
-    try {
-        await connectDB();
+    const project = await Project.findById(projectId);
+    if (!project) return { success: false, message: "Project not found." };
 
-        const project = await Project.findById(projectId);
-        if (!project) return { success: false, message: "Project not found." };
+    const alreadyAssigned = project.assignees.some(
+      (id) => id.toString() === assignedUserId,
+    );
 
-        const alreadyAssigned = project.assignees.some(
-            (id) => id.toString() === assignedUserId
-        );
-
-        if (alreadyAssigned) {
-            return { success: false, message: "User is already assigned to this project." };
-        }
-
-        project.assignees.push(assignedUserId);
-        await project.save();
-
-        revalidatePath('/', 'layout');
-
-        return { success: true, message: "User assigned successfully." };
-    } catch (error) {
-        return { success: false, message: "Failed to assign user." };
+    if (alreadyAssigned) {
+      return {
+        success: false,
+        message: "User is already assigned to this project.",
+      };
     }
 
+    project.assignees.push(assignedUserId);
+    await project.save();
+
+    revalidatePath("/", "layout");
+
+    return { success: true, message: "User assigned successfully." };
+  } catch (error) {
+    return { success: false, message: "Failed to assign user." };
+  }
 }
